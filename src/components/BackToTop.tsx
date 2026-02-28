@@ -10,13 +10,15 @@ export function BackToTop() {
 
   useEffect(() => {
     const handleScroll = () =>
-      setVisible(window.scrollY > BACK_TO_TOP_VISIBLE_SCROLL_Y);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+      setVisible(globalThis.window.scrollY > BACK_TO_TOP_VISIBLE_SCROLL_Y);
+    globalThis.window.addEventListener('scroll', handleScroll, {
+      passive: true,
+    });
+    return () => globalThis.window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    globalThis.window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   return (
@@ -28,7 +30,7 @@ export function BackToTop() {
         'flex h-11 w-11 items-center justify-center rounded-full',
         'border border-border-primary bg-surface-primary text-text-secondary',
         'shadow-(--shadow-lg)',
-        'hover:bg-accent hover:text-white hover:shadow-(--shadow-xl)',
+        'hover:bg-accent hover:text-tag-active-text hover:shadow-(--shadow-xl)',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
         !visible && 'pointer-events-none',
       )}

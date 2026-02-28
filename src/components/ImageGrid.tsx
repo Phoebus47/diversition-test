@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import type { ImageItem } from '@/lib/data/mock-images';
 import { LABELS } from '@/lib/constants';
+import {
+  EASE,
+  STAGGER_DELAY_CAP,
+  STAGGER_DELAY_PER_CARD,
+  STAGGER_DURATION,
+  STAGGER_Y_OFFSET,
+} from '@/lib/motion-constants';
 import { useMasonryColumns } from '@/lib/hooks/use-masonry-columns';
 import { useResponsiveColumns } from '@/lib/hooks/use-responsive-columns';
 import { GalleryCard } from './GalleryCard';
-
-/** Production masonry: short stagger, capped delay, reduced-motion friendly. */
-const STAGGER_DELAY_PER_CARD = 0.008;
-const STAGGER_DELAY_CAP = 0.08;
-const STAGGER_DURATION = 0.22;
-const STAGGER_Y_OFFSET = 12;
-const EASE = [0.22, 1, 0.36, 1] as const;
 
 function usePrefersReducedMotion(): boolean {
   const [prefers, setPrefers] = useState(false);

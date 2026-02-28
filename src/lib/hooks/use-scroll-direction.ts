@@ -16,7 +16,7 @@ export function useScrollDirection(): boolean {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const y = window.scrollY;
+        const y = globalThis.window.scrollY;
         if (y <= SCROLL_NAV_VISIBLE_THRESHOLD) {
           setVisible(true);
         } else if (y > lastY.current) {
@@ -29,9 +29,9 @@ export function useScrollDirection(): boolean {
       });
     }
 
-    lastY.current = window.scrollY;
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    lastY.current = globalThis.window.scrollY;
+    globalThis.window.addEventListener('scroll', onScroll, { passive: true });
+    return () => globalThis.window.removeEventListener('scroll', onScroll);
   }, []);
 
   return visible;

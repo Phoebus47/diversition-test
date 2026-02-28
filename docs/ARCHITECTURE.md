@@ -4,7 +4,7 @@
 
 ## Overview
 
-The Image Gallery is a client-side Single-Page Application built with Next.js 16, React 19, and TypeScript. It displays a masonry-style grid of placeholder images with hashtags, supports infinite scroll, and keyword filtering. UI uses Framer Motion for animations; nav hides on scroll down and shows on scroll up. Logo in header and footer (`public/image-gallery-icon.webp`).
+The Image Gallery is a client-side Single-Page Application built with Next.js 16, React 19, and TypeScript. It displays a masonry-style grid of placeholder images with hashtags, supports infinite scroll, and keyword filtering. UI uses Framer Motion for animations; theme toggle (Light/Dark/System) in header; nav hides on scroll down and shows on scroll up. Logo in header and footer (`public/image-gallery-icon.webp`).
 
 ## High-Level Architecture
 
@@ -49,7 +49,7 @@ flowchart TB
 ```
 page.tsx (Server)
 └── GalleryClient (Client)
-    ├── header (logo; visibility from useScrollDirection)
+    ├── header (logo; ThemeToggle; visibility from useScrollDirection)
     ├── HashtagFilter
     ├── ImageGrid (ul/li)
     │   └── GalleryCard (×N)
@@ -92,6 +92,7 @@ src/
 │   ├── GalleryCard.tsx       # Single image + hashtags
 │   ├── ImageGrid.tsx        # Masonry grid (ul/li)
 │   ├── HashtagFilter.tsx     # Active filter + clear
+│   ├── ThemeToggle.tsx      # Light / Dark / System theme
 │   ├── Lightbox.tsx         # Full-screen viewer
 │   ├── BackToTop.tsx        # Scroll-to-top button
 │   └── Footer.tsx           # Footer with logo
@@ -107,18 +108,30 @@ src/
         ├── use-infinite-scroll.ts
         ├── use-masonry-columns.ts
         ├── use-responsive-columns.ts
-        └── use-scroll-direction.ts # Nav hide on scroll down, show on scroll up
+        ├── use-scroll-direction.ts  # Nav hide on scroll down, show on scroll up
+        └── use-theme.ts             # Theme (light/dark/system) + localStorage
 ```
 
 ## Testing Strategy
 
-- **Unit (Vitest + RTL):** 20 test files, 93 tests, coverage 100%. Run `npm run test` or `npm run test:ci`.
-- **E2E (Playwright):** Critical user flows (gallery load, filter, clear filter, lightbox). Run `npm run test:e2e`; `npm run test:e2e:report` to open HTML report.
+- **Unit (Vitest + RTL):** 22 test files, 117 tests, coverage 100%. Run `npm run test` or `npm run test:ci`.
+- **E2E (Playwright):** 6 tests – gallery load, filter, clear filter, lightbox, back-to-top, infinite scroll. Run `npm run test:e2e`; `npm run test:e2e:report` to open HTML report.
 - **Performance:** Masonry stagger uses capped delay and respects `prefers-reduced-motion`.
 
 ## API & Database
 
-- **GET /api/images** – Returns all images from MySQL (Prisma). Falls back to mock if DB unavailable.
+### API layer
+
+- **GET /api/images** – Returns a JSON array of image items. Each item: `{ id, src, alt, width, height, hashtags: string[] }`. Uses Prisma to read from MySQL; on any error (e.g. DB unavailable), returns mock data from `getMockImagePool()` so the app always has data. No query params; no auth.
+
+### Error handling
+
+- **API:** `try/catch` in the route; on failure, fallback to mock and return 200 with mock payload (no 5xx to the client when DB is down).
+- **Client:** `useImagePool` fetches `/api/images`; on network error or non-OK response, it uses mock data from `getMockImagePool()` so the gallery still renders.
+- **No global error boundary** in this SPA; critical failures are limited to the data layer and handled by fallbacks.
+
+### Database
+
 - **Prisma + MySQL** – `Image` and `Hashtag` models. Seed: `npm run db:seed`.
 
 ## Deployment & Production

@@ -57,6 +57,9 @@
 
 ### 3. UI/UX
 
+- **Theme toggle** – Light / Dark / System in header; `localStorage`; no flash (inline script).
+- **Loading skeleton** – Grid of 12 pulse cards while initial gallery loads.
+- **Contrast** – `--text-tertiary` and dark-mode tokens adjusted for WCAG AA 4.5:1.
 - Logo (header + footer) from `public/image-gallery-icon.webp`
 - Glassmorphism, design system (globals.css)
 - Lightbox (full-screen, next/prev, keyboard, zoom)
@@ -76,16 +79,17 @@
 
 - PRD.md – requirements
 - docs/CODING_STANDARDS.md – coding standards
-- docs/ARCHITECTURE.md – diagram (Mermaid), stack, deploy
+- docs/ARCHITECTURE.md – diagram (Mermaid), stack, data flow
 - docs/DEPLOY.md – Docker, Vercel, Ubuntu + PM2
+- docs/PROJECT_STATUS.md – status and key files
 - SETUP.md – local setup
 - README.md – features, scripts, docs links
 
 ### 6. Tests
 
-- **Unit:** 20 test files, 93 tests (Vitest + RTL), coverage 100%
-- **E2E:** Playwright (test:e2e) – 4 tests; test:e2e:report to open HTML report
-- Covered: GalleryCard, ImageGrid, HashtagFilter, Lightbox, BackToTop, Footer, GalleryClient, page, layout, API route, hooks (infinite-scroll, image-pool, gallery-filter, masonry, responsive-columns, scroll-direction), mock-data, utils, db
+- **Unit:** 22 test files, 117 tests (Vitest + RTL), coverage 100%
+- **E2E:** Playwright (test:e2e) – 6 tests (gallery, filter, clear, lightbox, back-to-top, infinite scroll); test:e2e:report to open HTML report
+- Covered: GalleryCard, ImageGrid, HashtagFilter, ThemeToggle, Lightbox, BackToTop, Footer, GalleryClient, page, layout, API route, hooks (infinite-scroll, image-pool, gallery-filter, masonry, responsive-columns, scroll-direction, use-theme), mock-data, utils, db
 
 ### 7. Code quality
 
@@ -122,6 +126,7 @@ All gates pass. Bar: 0 open issues (Security, Reliability, Maintainability), 100
 | `src/components/GalleryCard.tsx`        | Single card, image + hashtags, lightbox trigger |
 | `src/components/ImageGrid.tsx`          | Masonry grid (ul/li, semantic list)             |
 | `src/components/HashtagFilter.tsx`      | Sticky tag filter                               |
+| `src/components/ThemeToggle.tsx`        | Light / Dark / System theme in header           |
 | `src/components/Lightbox.tsx`           | Full-screen viewer                              |
 | `src/components/BackToTop.tsx`          | Scroll-to-top button                            |
 | `src/components/Footer.tsx`             | Footer with logo                                |
@@ -131,6 +136,7 @@ All gates pass. Bar: 0 open issues (Security, Reliability, Maintainability), 100
 | `src/lib/hooks/use-gallery-filter.ts`   | Filter by hashtag                               |
 | `src/lib/hooks/use-masonry-columns.ts`  | Masonry layout distribution                     |
 | `src/lib/hooks/use-scroll-direction.ts` | Nav visibility (hide on scroll down)            |
+| `src/lib/hooks/use-theme.ts`            | Theme state + localStorage                      |
 | `src/lib/data/mock-images.ts`           | Mock data (placehold.co)                        |
 | `src/app/api/images/route.ts`           | GET images API                                  |
 | `docs/ARCHITECTURE.md`                  | Architecture diagram                            |

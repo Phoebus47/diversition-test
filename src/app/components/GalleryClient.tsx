@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer';
 import { HashtagFilter } from '@/components/HashtagFilter';
 import { ImageGrid } from '@/components/ImageGrid';
 import { Lightbox } from '@/components/Lightbox';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import {
   INITIAL_LOAD_COUNT,
   LABELS,
@@ -14,6 +15,7 @@ import {
   LOGO_SRC,
   LOGO_WIDTH,
   PAGE_SIZE,
+  SKELETON_CARD_COUNT,
 } from '@/lib/constants';
 import type { ImageItem } from '@/lib/data/mock-images';
 import { useGalleryFilter } from '@/lib/hooks/use-gallery-filter';
@@ -58,17 +60,22 @@ export function GalleryClient() {
     if (poolLoading) {
       return (
         <motion.div
-          className="flex flex-col items-center justify-center py-32"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.25 }}
         >
-          <div className="mb-4 flex gap-1.5">
-            <span className="animate-pulse-dot inline-block h-2 w-2 rounded-full bg-accent" />
-            <span className="animate-pulse-dot inline-block h-2 w-2 rounded-full bg-accent [animation-delay:0.15s]" />
-            <span className="animate-pulse-dot inline-block h-2 w-2 rounded-full bg-accent [animation-delay:0.3s]" />
-          </div>
-          <p className="text-sm text-text-tertiary">{LABELS.loadingGallery}</p>
+          <output
+            data-testid="loading-skeleton"
+            className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4"
+            aria-label={LABELS.loadingGallery}
+          >
+            {Array.from({ length: SKELETON_CARD_COUNT }, (_, i) => (
+              <div
+                key={i}
+                className="aspect-4/3 rounded-2xl border border-border-primary bg-surface-secondary animate-pulse"
+              />
+            ))}
+          </output>
         </motion.div>
       );
     }
@@ -124,6 +131,7 @@ export function GalleryClient() {
         {hasMore ? (
           <div
             ref={sentinelRef}
+            data-testid="scroll-sentinel"
             className="flex min-h-24 items-center justify-center gap-1.5 py-12"
             aria-hidden
           >
@@ -168,6 +176,7 @@ export function GalleryClient() {
           </h1>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <HashtagFilter
               activeHashtag={activeHashtag}
               onClear={onClearFilter}

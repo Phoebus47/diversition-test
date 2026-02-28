@@ -53,4 +53,42 @@ test.describe('Image Gallery', () => {
 
     await expect(page.getByRole('dialog')).toBeVisible();
   });
+
+  test('back-to-top button appears on scroll and scrolls to top when clicked', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await expect(page.getByRole('list', { name: /image grid/i })).toBeVisible();
+
+    await page.evaluate(() => window.scrollTo(0, 800));
+    await expect(
+      page.getByRole('button', { name: /back to top/i }),
+    ).toBeVisible();
+
+    await page
+      .getByRole('button', { name: /back to top/i })
+      .click({ force: true });
+    await page.waitForFunction(() => window.scrollY < 100, { timeout: 5000 });
+    const scrollY = await page.evaluate(() => window.scrollY);
+    expect(scrollY).toBeLessThan(100);
+  });
+
+  test('infinite scroll loads more images when scrolling to bottom', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const list = page.getByRole('list', { name: /image grid/i });
+    await expect(list).toBeVisible();
+
+    const initialCards = await page.getByTestId('gallery-card').count();
+
+    await page.getByTestId('scroll-sentinel').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(800);
+
+    const afterScrollCards = await page.getByTestId('gallery-card').count();
+    const reachedEnd = page.getByText(/you've reached the end/i);
+    expect(
+      afterScrollCards > initialCards || (await reachedEnd.isVisible()),
+    ).toBeTruthy();
+  });
 });

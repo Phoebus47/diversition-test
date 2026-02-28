@@ -87,7 +87,7 @@ describe('GalleryClient Logic Verification', () => {
       sentinelRef: { current: null },
     });
     const { rerender } = render(<GalleryClient />);
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+    expect(screen.getByTestId('loading-skeleton')).toBeInTheDocument();
 
     // 2. Success & Interactions
     mockUseImagePool.mockReturnValue({ images: [pooled], isLoading: false });

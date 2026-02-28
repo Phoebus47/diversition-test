@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import type { ImageItem } from '@/lib/data/mock-images';
 import { LABELS } from '@/lib/constants';
+import { EASE, TAP_DURATION } from '@/lib/motion-constants';
 import { cn } from '@/lib/utils';
 
 export interface LightboxProps {
@@ -52,10 +53,10 @@ export function Lightbox({
   useEffect(() => {
     if (currentIndex === null) return;
     document.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('lightbox-open');
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
+      document.body.classList.remove('lightbox-open');
     };
   }, [currentIndex, handleKeyDown]);
 
@@ -101,9 +102,8 @@ export function Lightbox({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: TAP_DURATION }}
       />
-      {/* Backdrop as <button> so click/keyboard focus stay on a focusable element (a11y) */}
       <button
         type="button"
         data-testid="lightbox-backdrop"
@@ -175,7 +175,6 @@ export function Lightbox({
         </button>
       </div>
 
-      {/* Inner content as <button> to stop click/keyboard from closing lightbox when interacting with image */}
       <motion.button
         type="button"
         data-testid="lightbox-content"
@@ -185,7 +184,7 @@ export function Lightbox({
         aria-label={LABELS.getAriaLightboxDetails(currentImage.alt)}
         initial={false}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
+        transition={{ duration: TAP_DURATION, ease: EASE }}
       >
         <div className="relative overflow-hidden rounded-2xl shadow-2xl">
           <Image

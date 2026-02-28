@@ -26,7 +26,7 @@ export function HashtagFilter({
       transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
     >
       <span className="text-sm text-text-secondary">{LABELS.filteringBy}</span>
-      <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-white">
+      <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-tag-active-text">
         {activeHashtag}
       </span>
       <button

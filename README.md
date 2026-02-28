@@ -10,9 +10,11 @@ Single-Page Application for displaying an image gallery with infinite scroll and
 
 - **Logo** – Header and footer use `public/image-gallery-icon.webp`.
 - **Premium UI & UX** – Glassmorphism, Framer Motion animations, and design tokens (Tailwind v4). Nav hides on scroll down, shows on scroll up.
+- **Theme toggle** – Light / Dark / System in header; preference stored in `localStorage`; no flash on load (inline script in layout).
+- **Loading skeleton** – Grid of 12 pulse placeholders while initial gallery loads (replaces dots + text).
 - **Advanced Masonry Layout** – Stable JavaScript-based distribution algorithm that eliminates layout shift (Zero Layout Shift) during infinite scroll.
 - **Interactive Lightbox** – Full-screen modal with Next/Prev navigation, keyboard support (Arrow keys/ESC), and zoom transitions.
-- **Performance Optimized** – LCP priority loading, skeleton shimmer states, and hardware-accelerated transitions.
+- **Performance Optimized** – LCP priority loading, skeleton states, and hardware-accelerated transitions.
 - **Infinite Scroll** – Intelligent loading with smooth sentinel detection and animated feedback.
 - **Keyword Filtering** – Dynamic active filtering with frosted-glass sticky header for constant accessibility.
 - **Micro-interactions** – Ripple effects on hashtag clicks and subtle card entrance animations for elite feedback.
@@ -35,6 +37,8 @@ All checks must pass before submit. Current bar:
 - **SonarQube** – `npm run sonar` (Quality Gate pass: 0 open issues, 100% coverage, no duplications). Optional; see SETUP.md for Docker.
 
 See [docs/CODING_STANDARDS.md](./docs/CODING_STANDARDS.md) for full standards.
+
+**Accessibility & theme:** Theme toggle (Light/Dark/System) in header; contrast and focus states target WCAG AA via design tokens in `globals.css`. Motion respects `prefers-reduced-motion`.
 
 ## Getting Started
 
@@ -113,6 +117,7 @@ See [docs/DEPLOY.md](./docs/DEPLOY.md) and [SETUP.md](./SETUP.md) for details.
 - [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) – Architecture diagram
 - [docs/DEPLOY.md](./docs/DEPLOY.md) – Deployment guide
 - [SETUP.md](./SETUP.md) – Setup guide
+- [CONTRIBUTING.md](./CONTRIBUTING.md) – How to contribute
 
 ## Deployment
 

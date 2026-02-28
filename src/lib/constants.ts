@@ -22,6 +22,10 @@ export const LABELS = {
   ariaNextImage: 'Next image',
   getAriaLightboxDetails: (alt: string) => `${alt} and details`,
   getAriaViewInFullScreen: (alt: string) => `View ${alt} in full screen`,
+  ariaThemeToggle: 'Theme (light, dark, or system)',
+  themeLight: 'Light',
+  themeDark: 'Dark',
+  themeSystem: 'System',
   /** SEO / metadata (layout) */
   metaDescription:
     'Image gallery with infinite scroll and hashtag filtering. Browse and filter images by keywords.',
@@ -29,6 +33,9 @@ export const LABELS = {
 
 export const PAGE_SIZE = 12;
 export const INITIAL_LOAD_COUNT = 12;
+
+/** Number of skeleton placeholders shown while initial gallery is loading */
+export const SKELETON_CARD_COUNT = 12;
 
 /** Px from viewport bottom to trigger loading more (IntersectionObserver rootMargin) */
 export const SCROLL_SENTINEL_ROOT_MARGIN = '200px';

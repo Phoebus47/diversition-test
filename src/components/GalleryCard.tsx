@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import type { ImageItem } from '@/lib/data/mock-images';
 import { LABELS } from '@/lib/constants';
+import { EASE, TAP_DURATION } from '@/lib/motion-constants';
 import { cn } from '@/lib/utils';
 
 export interface GalleryCardProps {
@@ -52,13 +53,12 @@ export function GalleryCard({
       data-testid="gallery-card"
       whileHover={{
         y: -4,
-        transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
+        transition: { duration: TAP_DURATION, ease: EASE },
       }}
-      transition={{ type: 'tween', duration: 0.3 }}
+      transition={{ type: 'tween', duration: TAP_DURATION * 1.5 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image container — clickable for lightbox; --card-aspect reserves space to reduce CLS. Exception: style only for dynamic CSS var (aspect ratio from props); see CODING_STANDARDS §2. */}
       <button
         type="button"
         className="relative w-full cursor-zoom-in overflow-hidden bg-muted/10 min-h-25 text-left border-0 p-0 aspect-(--card-aspect,4/3) disabled:pointer-events-none disabled:opacity-60"
@@ -116,16 +116,15 @@ export function GalleryCard({
               fetchPriority={priority ? 'high' : 'auto'}
               unoptimized
             />
-            {/* View Icon Overlay (Affordance) */}
             <motion.div
               className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/10"
               animate={{ opacity: isHovered ? 1 : 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: TAP_DURATION }}
             >
               <motion.div
                 className="p-3 rounded-full bg-white/25 text-white"
                 animate={{ scale: isHovered ? 1 : 0.9 }}
-                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: TAP_DURATION, ease: EASE }}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
