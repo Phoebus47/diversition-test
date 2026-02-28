@@ -246,6 +246,19 @@ body {
   animation: fadeIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Stagger delays for grid (no inline style – CODING_STANDARDS §2) */
+.stagger-0 { animation-delay: 0ms; }
+.stagger-30 { animation-delay: 30ms; }
+.stagger-60 { animation-delay: 60ms; }
+.stagger-90 { animation-delay: 90ms; }
+.stagger-120 { animation-delay: 120ms; }
+.stagger-150 { animation-delay: 150ms; }
+.stagger-180 { animation-delay: 180ms; }
+.stagger-210 { animation-delay: 210ms; }
+.stagger-240 { animation-delay: 240ms; }
+.stagger-270 { animation-delay: 270ms; }
+.stagger-300 { animation-delay: 300ms; }
+
 .animate-pulse-dot {
   animation: pulse-dot 1.4s ease-in-out infinite;
 }
@@ -273,6 +286,11 @@ body {
 
 .animate-lightbox-in {
   animation: lightboxIn 0.25s ease-out forwards;
+}
+
+.animate-lightbox-in::backdrop {
+  background: rgb(0 0 0 / 0.9);
+  backdrop-filter: blur(12px);
 }
 
 .animate-lightbox-zoom {

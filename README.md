@@ -1,5 +1,7 @@
 # Image Gallery SPA
 
+**Last updated:** February 28, 2026
+
 Single-Page Application for displaying an image gallery with infinite scroll and keyword filtering.
 
 ## Key Features
@@ -36,15 +38,18 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Available Scripts
 
-| Command          | Description                   |
-| ---------------- | ----------------------------- |
-| `npm run dev`    | Run development server        |
-| `npm run build`  | Build for production          |
-| `npm run start`  | Run production server         |
-| `npm run lint`   | Run ESLint                    |
-| `npm run format` | Format code with Prettier     |
-| `npm run test`   | Run unit tests                |
-| `npm run sonar`  | Run SonarQube scan (optional) |
+| Command                 | Description                    |
+| ----------------------- | ------------------------------ |
+| `npm run dev`           | Run development server         |
+| `npm run build`         | Build for production           |
+| `npm run start`         | Run production server          |
+| `npm run lint`          | Run ESLint                     |
+| `npm run format`        | Format code with Prettier      |
+| `npm run test`          | Run unit tests (Vitest)        |
+| `npm run test:coverage` | Run tests with coverage report |
+| `npm run test:e2e`      | Run E2E tests (Playwright)     |
+| `npm run test:e2e:ui`   | Run E2E tests with UI mode     |
+| `npm run sonar`         | Run SonarQube scan (optional)  |
 
 ### Project Structure
 
@@ -54,18 +59,37 @@ src/
 ├── components/   # Shared components
 └── lib/          # Utils, hooks, data
 
-__tests__/        # Test files
+__tests__/        # Unit tests (Vitest)
+e2e/              # E2E tests (Playwright)
 docs/             # Documentation
+```
+
+## Database (Optional)
+
+With MySQL, the app uses the API. Without it, mock data is used.
+
+```bash
+# Set DATABASE_URL in .env (see .env.example)
+npm run db:generate
+npm run db:push
+npm run db:seed
+npm run db:studio   # Optional: Prisma Studio UI
 ```
 
 ## Documentation
 
 - [PRD.md](./PRD.md) – Product Requirements Document
+- [docs/PROJECT_STATUS.md](./docs/PROJECT_STATUS.md) – **Project status (what’s done)**
 - [docs/CODING_STANDARDS.md](./docs/CODING_STANDARDS.md) – Coding standards
 - [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) – Architecture diagram
+- [docs/DEPLOY.md](./docs/DEPLOY.md) – Deployment guide
 - [SETUP.md](./SETUP.md) – Setup guide
 
 ## Deployment
+
+- **Docker**: `docker compose up -d` – App + MySQL (see [docs/DEPLOY.md](./docs/DEPLOY.md))
+- **Vercel**: Connect repo, add `DATABASE_URL` env var
+- **Ubuntu + PM2**: See [docs/DEPLOY.md](./docs/DEPLOY.md)
 
 Build for production:
 
@@ -73,5 +97,3 @@ Build for production:
 npm run build
 npm run start
 ```
-
-Or deploy to Vercel, Docker, or Ubuntu Server according to your architecture design.

@@ -11,6 +11,7 @@ export function useMasonryColumns(
   columnCount: number,
 ): ImageItem[][] {
   return useMemo(() => {
+    if (columnCount <= 0) return [];
     const columns: ImageItem[][] = Array.from(
       { length: columnCount },
       () => [],

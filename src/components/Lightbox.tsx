@@ -1,8 +1,9 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import type { ImageItem } from '@/lib/data/mock-images';
+import { LABELS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 export interface LightboxProps {
@@ -17,15 +18,15 @@ export function Lightbox({
   currentIndex,
   onClose,
   onNavigate,
-}: LightboxProps) {
-  const currentImage = currentIndex !== null ? images[currentIndex] : null;
+}: Readonly<LightboxProps>) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const currentImage =
+    currentIndex === null ? null : (images[currentIndex] ?? null);
 
   const handlePrev = useCallback(
     (e?: React.MouseEvent) => {
       e?.stopPropagation();
-      if (currentIndex !== null) {
-        onNavigate((currentIndex - 1 + images.length) % images.length);
-      }
+      onNavigate((currentIndex! - 1 + images.length) % images.length);
     },
     [currentIndex, images.length, onNavigate],
   );
@@ -33,9 +34,7 @@ export function Lightbox({
   const handleNext = useCallback(
     (e?: React.MouseEvent) => {
       e?.stopPropagation();
-      if (currentIndex !== null) {
-        onNavigate((currentIndex + 1) % images.length);
-      }
+      onNavigate((currentIndex! + 1) % images.length);
     },
     [currentIndex, images.length, onNavigate],
   );
@@ -59,23 +58,57 @@ export function Lightbox({
     };
   }, [currentIndex, handleKeyDown]);
 
+  const prevDialogRef = useRef<HTMLDialogElement | null>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (currentIndex === null) {
+      const toClose = prevDialogRef.current ?? dialog;
+      if (toClose && typeof toClose.close === 'function') toClose.close();
+      prevDialogRef.current = null;
+    } else if (dialog && typeof dialog.showModal === 'function') {
+      dialog.showModal();
+      prevDialogRef.current = dialog;
+    }
+  }, [currentIndex]);
+
+  const handleBackdropKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onClose();
+      }
+    },
+    [onClose],
+  );
+
   if (!currentImage) return null;
 
   return (
-    <div
+    <dialog
+      ref={dialogRef}
       className={cn(
         'fixed inset-0 z-50 flex items-center justify-center cursor-pointer',
         'bg-black/90 backdrop-blur-md',
         'animate-lightbox-in',
+        'border-0 p-0 w-screen h-screen max-w-none max-h-none',
       )}
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
+      onClose={onClose}
+      aria-modal
       aria-label={currentImage.alt}
     >
-      {/* Close button */}
+      {/* Backdrop as <button> so click/keyboard focus stay on a focusable element (a11y) */}
       <button
         type="button"
+        data-testid="lightbox-backdrop"
+        className="absolute inset-0 z-0 cursor-pointer border-0 bg-transparent p-0"
+        aria-label={LABELS.ariaCloseLightbox}
+        onClick={onClose}
+        onKeyDown={handleBackdropKeyDown}
+      />
+      <button
+        type="button"
+        data-testid="lightbox-close-btn"
         onClick={onClose}
         className={cn(
           'absolute right-6 top-6 z-20 cursor-pointer',
@@ -85,7 +118,7 @@ export function Lightbox({
           'hover:bg-white/20 hover:text-white hover:scale-110',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50',
         )}
-        aria-label="Close lightbox"
+        aria-label={LABELS.ariaCloseLightbox}
       >
         <svg
           width="24"
@@ -103,12 +136,11 @@ export function Lightbox({
         </svg>
       </button>
 
-      {/* Navigation Buttons */}
       <div className="absolute inset-x-0 top-1/2 z-10 hidden -translate-y-1/2 justify-between px-6 sm:flex">
         <button
           onClick={handlePrev}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white/5 text-white/60 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white hover:scale-110"
-          aria-label="Previous image"
+          aria-label={LABELS.ariaPreviousImage}
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
             <path
@@ -123,7 +155,7 @@ export function Lightbox({
         <button
           onClick={handleNext}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white/5 text-white/60 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white hover:scale-110"
-          aria-label="Next image"
+          aria-label={LABELS.ariaNextImage}
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
             <path
@@ -137,10 +169,13 @@ export function Lightbox({
         </button>
       </div>
 
-      {/* Image Container */}
-      <div
-        className="animate-lightbox-zoom relative flex flex-col items-center"
+      {/* Inner content as <button> to stop click/keyboard from closing lightbox when interacting with image */}
+      <button
+        type="button"
+        className="animate-lightbox-zoom relative z-10 flex flex-col items-center cursor-default border-0 bg-transparent p-0 text-left"
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+        aria-label={LABELS.getAriaLightboxDetails(currentImage.alt)}
       >
         <div className="relative overflow-hidden rounded-2xl shadow-2xl">
           <Image
@@ -155,7 +190,6 @@ export function Lightbox({
           />
         </div>
 
-        {/* Info Overlay */}
         <div className="mt-6 flex flex-col items-center gap-3">
           <div className="flex flex-wrap justify-center gap-2">
             {currentImage.hashtags.map((tag) => (
@@ -168,10 +202,10 @@ export function Lightbox({
             ))}
           </div>
           <span className="text-xs font-medium text-white/40 tracking-widest uppercase">
-            {currentIndex !== null ? currentIndex + 1 : 0} / {images.length}
+            {currentIndex! + 1} / {images.length}
           </span>
         </div>
-      </div>
-    </div>
+      </button>
+    </dialog>
   );
 }

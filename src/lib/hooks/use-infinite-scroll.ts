@@ -1,18 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
-import { getMockImagePool, type ImageItem } from '@/lib/data/mock-images';
+import {
+  SCROLL_SENTINEL_ROOT_MARGIN,
+  SCROLL_SENTINEL_THRESHOLD,
+} from '@/lib/constants';
+import type { ImageItem } from '@/lib/data/mock-images';
 
 export interface UseInfiniteScrollOptions {
+  pool: ImageItem[];
   initialCount: number;
   pageSize: number;
   filter: (img: ImageItem) => boolean;
 }
 
 export function useInfiniteScroll({
+  pool,
   initialCount,
   pageSize,
   filter,
 }: UseInfiniteScrollOptions) {
-  const pool = getMockImagePool();
   const filtered = pool.filter(filter);
 
   const [displayCount, setDisplayCount] = useState(initialCount);
@@ -31,7 +36,10 @@ export function useInfiniteScroll({
           setDisplayCount((c) => Math.min(c + pageSize, filtered.length));
         }
       },
-      { rootMargin: '200px', threshold: 0.1 },
+      {
+        rootMargin: SCROLL_SENTINEL_ROOT_MARGIN,
+        threshold: SCROLL_SENTINEL_THRESHOLD,
+      },
     );
 
     observer.observe(sentinel);

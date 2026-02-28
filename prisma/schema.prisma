@@ -1,0 +1,32 @@
+// Prisma schema for Image Gallery
+// Database: MySQL (per PRD)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Image {
+  id       String   @id @default(cuid())
+  src      String
+  alt      String
+  width    Int
+  height   Int
+  createdAt DateTime @default(now())
+
+  hashtags Hashtag[]
+}
+
+model Hashtag {
+  id      String  @id @default(cuid())
+  name    String  // e.g. "#nature"
+  imageId String
+  image   Image   @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  @@unique([imageId, name])
+  @@index([name])
+}

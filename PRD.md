@@ -119,10 +119,12 @@
 
 ## 9. Pre-Submission Checklist
 
-- [ ] All PRD features implemented
-- [ ] Architecture diagram with explanation
+- [x] All PRD features implemented
+- [x] Architecture diagram with explanation
 - [ ] Complete source code submitted
 - [ ] Use .zip if compressing
 - [ ] Submit to hr@diversition.co.th
 - [ ] Submit by March 1, 2026, 8:00 PM
 - [ ] (Optional) Live URL for testing
+
+> **Status:** See [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) for full project status.

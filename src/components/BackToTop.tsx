@@ -1,13 +1,15 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { BACK_TO_TOP_VISIBLE_SCROLL_Y, LABELS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 export function BackToTop() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setVisible(window.scrollY > 600);
+    const handleScroll = () =>
+      setVisible(window.scrollY > BACK_TO_TOP_VISIBLE_SCROLL_Y);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -32,7 +34,7 @@ export function BackToTop() {
           ? 'translate-y-0 opacity-100'
           : 'pointer-events-none translate-y-4 opacity-0',
       )}
-      aria-label="Back to top"
+      aria-label={LABELS.ariaBackToTop}
     >
       <svg
         width="18"

@@ -328,5 +328,5 @@ Before commit, verify:
 ---
 
 **Document Version:** 1.0  
-**Last Updated:** February 2026  
+**Last Updated:** February 28, 2026  
 **Project:** Image Gallery SPA

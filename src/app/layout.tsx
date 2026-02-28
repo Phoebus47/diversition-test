@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   title: 'Image Gallery | Diversition',
   description:
     'Image gallery with infinite scroll and hashtag filtering. Browse and filter images by keywords.',
+  openGraph: {
+    title: 'Image Gallery | Diversition',
+    description:
+      'Image gallery with infinite scroll and hashtag filtering. Browse and filter images by keywords.',
+  },
 };
 
 export default function RootLayout({

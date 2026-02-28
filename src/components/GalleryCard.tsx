@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import type { ImageItem } from '@/lib/data/mock-images';
+import { LABELS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 export interface GalleryCardProps {
@@ -17,7 +18,7 @@ export function GalleryCard({
   onImageClick,
   activeHashtag,
   priority = false,
-}: GalleryCardProps) {
+}: Readonly<GalleryCardProps>) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
@@ -42,7 +43,7 @@ export function GalleryCard({
   return (
     <article
       className={cn(
-        'animate-card-in mb-5',
+        'animate-card-in mb-5 [content-visibility:auto]',
         'group overflow-hidden',
         'rounded-(--card-radius) border border-card-border bg-card-bg',
         'shadow-(--shadow-md)',
@@ -52,18 +53,12 @@ export function GalleryCard({
       data-testid="gallery-card"
     >
       {/* Image container — clickable for lightbox */}
-      <div
-        className="relative cursor-zoom-in overflow-hidden bg-muted/10 min-h-25"
+      <button
+        type="button"
+        className="relative w-full cursor-zoom-in overflow-hidden bg-muted/10 min-h-25 text-left border-0 p-0"
         onClick={() => !hasError && onImageClick(image)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            if (!hasError) onImageClick(image);
-          }
-        }}
-        aria-label={`View ${image.alt} in full screen`}
+        disabled={hasError}
+        aria-label={LABELS.getAriaViewInFullScreen(image.alt)}
       >
         {!isLoaded && !hasError && (
           <div className="animate-shimmer absolute inset-0 z-10" />
@@ -87,7 +82,7 @@ export function GalleryCard({
               />
             </svg>
             <span className="text-[10px] font-bold tracking-widest uppercase opacity-40">
-              Image Unavailable
+              {LABELS.imageUnavailable}
             </span>
           </div>
         ) : (
@@ -122,9 +117,8 @@ export function GalleryCard({
             </div>
           </>
         )}
-      </div>
+      </button>
 
-      {/* Tags */}
       <div className="flex flex-wrap gap-1.5 px-3 py-2.5">
         {image.hashtags.map((tag) => (
           <button

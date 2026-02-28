@@ -15,7 +15,13 @@
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage",
     "test:ci": "vitest run --coverage --passWithNoTests",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "sonar": "npx dotenv-cli -- npx sonarqube-scanner",
+    "db:generate": "prisma generate",
+    "db:push": "npx dotenv-cli -e .env -- prisma db push",
+    "db:seed": "npx dotenv-cli -e .env -- prisma db seed",
+    "db:studio": "prisma studio",
     "lint-staged": "lint-staged",
     "prepare": "husky"
   },
@@ -29,8 +35,10 @@
     ]
   },
   "dependencies": {
+    "@prisma/client": "^6.19.2",
     "clsx": "^2.1.1",
     "next": "16.1.6",
+    "prisma": "^6.19.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "tailwind-merge": "^3.5.0"
@@ -39,6 +47,7 @@
     "@commitlint/cli": "^20.4.2",
     "@commitlint/config-conventional": "^20.4.2",
     "@eslint/eslintrc": "^3.3.4",
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -58,6 +67,7 @@
     "prettier": "^3.8.1",
     "sonarqube-scanner": "^3.5.0",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.18"

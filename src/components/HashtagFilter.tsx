@@ -6,20 +6,22 @@ export interface HashtagFilterProps {
   onClear: () => void;
 }
 
-export function HashtagFilter({ activeHashtag, onClear }: HashtagFilterProps) {
+export function HashtagFilter({
+  activeHashtag,
+  onClear,
+}: Readonly<HashtagFilterProps>) {
   if (!activeHashtag) return null;
 
   return (
-    <div
+    <output
       className={cn(
         'inline-flex items-center gap-3',
         'rounded-full border border-filter-border bg-filter-bg px-4 py-2',
         'shadow-(--shadow-sm)',
       )}
-      role="status"
       aria-live="polite"
     >
-      <span className="text-sm text-text-secondary">Filtering by</span>
+      <span className="text-sm text-text-secondary">{LABELS.filteringBy}</span>
       <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-white">
         {activeHashtag}
       </span>
@@ -50,6 +52,6 @@ export function HashtagFilter({ activeHashtag, onClear }: HashtagFilterProps) {
           />
         </svg>
       </button>
-    </div>
+    </output>
   );
 }

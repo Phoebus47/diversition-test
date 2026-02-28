@@ -1,0 +1,34 @@
+# Image Gallery - App + MySQL
+# Usage: docker compose up -d
+# Then: docker compose exec app npm run db:push && npm run db:seed
+
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_URL: mysql://gallery:gallery@mysql:3306/gallery
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gallery
+      MYSQL_USER: gallery
+      MYSQL_PASSWORD: gallery
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mysql_data:

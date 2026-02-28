@@ -1,5 +1,7 @@
 # Setup Guide – Image Gallery SPA
 
+**Last updated:** February 28, 2026
+
 Step-by-step project setup guide (run `npx create` yourself).
 
 ---
@@ -9,7 +11,7 @@ Step-by-step project setup guide (run `npx create` yourself).
 **Option 1 – Create in empty folder (recommended)**
 
 ```bash
-cd "l:\Personal Project"
+cd ~/projects
 npx create-next-app@latest diversition-test --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
 cd diversition-test
 ```
@@ -19,7 +21,7 @@ Then copy files from this repo (PRD.md, SETUP.md, .cursorrules, .cursor/, .githu
 **Option 2 – Create in existing folder**
 
 ```bash
-cd "l:\Personal Project\diversition-test"
+cd your-project-folder
 npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
 ```
 
@@ -88,7 +90,13 @@ Add or edit in `package.json`:
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage",
     "test:ci": "vitest run --coverage --passWithNoTests",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "sonar": "npx dotenv-cli -- npx sonarqube-scanner",
+    "db:generate": "prisma generate",
+    "db:push": "npx dotenv-cli -e .env -- prisma db push",
+    "db:seed": "npx dotenv-cli -e .env -- prisma db seed",
+    "db:studio": "prisma studio",
     "lint-staged": "lint-staged",
     "prepare": "husky || true"
   },
@@ -148,6 +156,8 @@ And run:
 npm run sonar
 ```
 
+**Note:** If you see "Missing blame information", it is expected when the repo has no commits yet or a shallow clone. The project sets `sonar.scm.disabled=true` so the scan still succeeds. To use blame/New Code in SonarQube, commit all files, then set `sonar.scm.disabled=false` (or remove that line) in `sonar-project.properties` and re-run the scan.
+
 ---
 
 ## Step 7: Verify Setup
@@ -164,13 +174,15 @@ npm run build
 
 ## Common Commands
 
-| Command          | Description                         |
-| ---------------- | ----------------------------------- |
-| `npm run dev`    | Run dev server                      |
-| `npm run lint`   | Run ESLint                          |
-| `npm run format` | Format with Prettier                |
-| `npm run test`   | Run tests                           |
-| `npm run sonar`  | Run SonarQube scan (Sonar required) |
+| Command               | Description                         |
+| --------------------- | ----------------------------------- |
+| `npm run dev`         | Run dev server                      |
+| `npm run lint`        | Run ESLint                          |
+| `npm run format`      | Format with Prettier                |
+| `npm run test`        | Run unit tests                      |
+| `npm run test:e2e`    | Run E2E tests (Playwright)          |
+| `npm run test:e2e:ui` | Run E2E tests with UI mode          |
+| `npm run sonar`       | Run SonarQube scan (Sonar required) |
 
 ---
 

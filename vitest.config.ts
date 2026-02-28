@@ -17,6 +17,7 @@ export default defineConfig({
       '**/__tests__/**/*.test.[jt]s?(x)',
       '**/?(*.)+(spec|test).[jt]s?(x)',
     ],
+    exclude: ['**/e2e/**', '**/node_modules/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov', 'html'],
@@ -28,7 +29,14 @@ export default defineConfig({
         '**/.next/**',
         '**/coverage/**',
         '**/__tests__/**',
+        '**/e2e/**',
       ],
+      thresholds: {
+        statements: 98,
+        branches: 85,
+        functions: 90,
+        lines: 98,
+      },
     },
   },
 });
