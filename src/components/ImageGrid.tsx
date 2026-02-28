@@ -1,28 +1,33 @@
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import type { ImageItem } from '@/lib/data/mock-images';
+import { LABELS } from '@/lib/constants';
 import { useMasonryColumns } from '@/lib/hooks/use-masonry-columns';
 import { useResponsiveColumns } from '@/lib/hooks/use-responsive-columns';
-import { cn } from '@/lib/utils';
 import { GalleryCard } from './GalleryCard';
 
-const STAGGER_CLASSES = [
-  'stagger-0',
-  'stagger-30',
-  'stagger-60',
-  'stagger-90',
-  'stagger-120',
-  'stagger-150',
-  'stagger-180',
-  'stagger-210',
-  'stagger-240',
-  'stagger-270',
-  'stagger-300',
-] as const;
+/** Production masonry: short stagger, capped delay, reduced-motion friendly. */
+const STAGGER_DELAY_PER_CARD = 0.008;
+const STAGGER_DELAY_CAP = 0.08;
+const STAGGER_DURATION = 0.22;
+const STAGGER_Y_OFFSET = 12;
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-export function getStaggerClass(index: number): string {
-  return (
-    STAGGER_CLASSES[Math.min(index, STAGGER_CLASSES.length - 1)] ??
-    'stagger-300'
-  );
+function usePrefersReducedMotion(): boolean {
+  const [prefers, setPrefers] = useState(false);
+  useEffect(() => {
+    if (
+      globalThis.window === undefined ||
+      typeof globalThis.window.matchMedia !== 'function'
+    )
+      return;
+    const mq = globalThis.window.matchMedia('(prefers-reduced-motion: reduce)');
+    const fn = (ev: MediaQueryListEvent) => setPrefers(ev.matches);
+    queueMicrotask(() => setPrefers(mq.matches));
+    mq.addEventListener('change', fn);
+    return () => mq.removeEventListener('change', fn);
+  }, []);
+  return prefers;
 }
 
 export interface ImageGridProps {
@@ -40,12 +45,31 @@ export function ImageGrid({
 }: Readonly<ImageGridProps>) {
   const columnCount = useResponsiveColumns();
   const columns = useMasonryColumns(images, columnCount);
+  const reduceMotion = usePrefersReducedMotion();
+
+  const cardVariants = reduceMotion
+    ? { hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } }
+    : {
+        hidden: { opacity: 1, y: STAGGER_Y_OFFSET },
+        visible: (i: number) => ({
+          opacity: 1,
+          y: 0,
+          transition: {
+            duration: STAGGER_DURATION,
+            delay: Math.min(i * STAGGER_DELAY_PER_CARD, STAGGER_DELAY_CAP),
+            ease: EASE,
+          },
+        }),
+      };
 
   return (
-    <ul
+    <motion.ul
       className="flex list-none gap-5 p-0"
-      aria-label="Image grid"
+      aria-label={LABELS.ariaImageGrid}
       data-testid="image-grid"
+      initial="hidden"
+      animate="visible"
+      variants={{ hidden: {}, visible: {} }}
     >
       {columns.map((column, colIndex) => (
         <li
@@ -57,9 +81,12 @@ export function ImageGrid({
           {column.map((image, imgIndex) => {
             const globalIndex = colIndex + imgIndex * columnCount;
             return (
-              <div
+              <motion.div
                 key={image.id}
-                className={cn('animate-card-in', getStaggerClass(globalIndex))}
+                initial="hidden"
+                animate="visible"
+                variants={cardVariants}
+                custom={globalIndex}
               >
                 <GalleryCard
                   image={image}
@@ -68,11 +95,11 @@ export function ImageGrid({
                   activeHashtag={activeHashtag}
                   priority={globalIndex < 12}
                 />
-              </div>
+              </motion.div>
             );
           })}
         </li>
       ))}
-    </ul>
+    </motion.ul>
   );
 }

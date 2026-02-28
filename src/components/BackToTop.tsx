@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { BACK_TO_TOP_VISIBLE_SCROLL_Y, LABELS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
@@ -19,7 +20,7 @@ export function BackToTop() {
   }, []);
 
   return (
-    <button
+    <motion.button
       type="button"
       onClick={scrollToTop}
       className={cn(
@@ -27,14 +28,14 @@ export function BackToTop() {
         'flex h-11 w-11 items-center justify-center rounded-full',
         'border border-border-primary bg-surface-primary text-text-secondary',
         'shadow-(--shadow-lg)',
-        'transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
         'hover:bg-accent hover:text-white hover:shadow-(--shadow-xl)',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-        visible
-          ? 'translate-y-0 opacity-100'
-          : 'pointer-events-none translate-y-4 opacity-0',
+        !visible && 'pointer-events-none',
       )}
       aria-label={LABELS.ariaBackToTop}
+      initial={false}
+      animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 16 }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
     >
       <svg
         width="18"
@@ -51,6 +52,6 @@ export function BackToTop() {
           strokeLinejoin="round"
         />
       </svg>
-    </button>
+    </motion.button>
   );
 }

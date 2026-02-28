@@ -2,8 +2,6 @@ import nextConfig from 'eslint-config-next/core-web-vitals';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 const config = [
-  ...nextConfig,
-  { name: eslintConfigPrettier.name, rules: eslintConfigPrettier.rules },
   {
     ignores: [
       '.next/**',
@@ -12,8 +10,12 @@ const config = [
       'build/**',
       'coverage/**',
       'node_modules/**',
+      '**/playwright-report/**',
+      '**/test-results/**',
     ],
   },
+  ...nextConfig,
+  { name: eslintConfigPrettier.name, rules: eslintConfigPrettier.rules },
   {
     files: ['**/__tests__/**/*.{ts,tsx}', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
     rules: {

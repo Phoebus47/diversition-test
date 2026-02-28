@@ -118,11 +118,9 @@ describe('Lightbox Final Coverage Fix', () => {
 
     // 3. StopPropagation check (click and keyDown on content wrapper — covers line 173–174)
     onClose.mockClear();
-    const zoom = container.querySelector('.animate-lightbox-zoom');
-    if (zoom) {
-      fireEvent.click(zoom);
-      fireEvent.keyDown(zoom, { key: 'Enter' });
-    }
+    const contentArea = screen.getByTestId('lightbox-content');
+    fireEvent.click(contentArea);
+    fireEvent.keyDown(contentArea, { key: 'Enter' });
     expect(onClose).not.toHaveBeenCalled();
 
     // 4. Close via X button
@@ -225,7 +223,7 @@ describe('Lightbox Final Coverage Fix', () => {
 
   it('content area keyDown does not call onClose (stopPropagation)', () => {
     const onClose = vi.fn();
-    const { container } = render(
+    render(
       <Lightbox
         images={mockImages}
         currentIndex={0}
@@ -233,9 +231,8 @@ describe('Lightbox Final Coverage Fix', () => {
         onNavigate={() => {}}
       />,
     );
-    const contentButton = container.querySelector('.animate-lightbox-zoom');
-    expect(contentButton).toBeInTheDocument();
-    fireEvent.keyDown(contentButton!, { key: 'Enter', bubbles: true });
+    const contentButton = screen.getByTestId('lightbox-content');
+    fireEvent.keyDown(contentButton, { key: 'Enter', bubbles: true });
     expect(onClose).not.toHaveBeenCalled();
   });
 });

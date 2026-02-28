@@ -8,8 +8,8 @@ Single-Page Application for displaying an image gallery with infinite scroll and
 
 ## Key Features
 
-- **Logo** – Header and footer use `public/image-gallery-icon.png`.
-- **Premium UI & UX** – Glassmorphism, tailored animations, and vibrant design system using Tailwind v4.
+- **Logo** – Header and footer use `public/image-gallery-icon.webp`.
+- **Premium UI & UX** – Glassmorphism, Framer Motion animations, and design tokens (Tailwind v4). Nav hides on scroll down, shows on scroll up.
 - **Advanced Masonry Layout** – Stable JavaScript-based distribution algorithm that eliminates layout shift (Zero Layout Shift) during infinite scroll.
 - **Interactive Lightbox** – Full-screen modal with Next/Prev navigation, keyboard support (Arrow keys/ESC), and zoom transitions.
 - **Performance Optimized** – LCP priority loading, skeleton shimmer states, and hardware-accelerated transitions.
@@ -19,9 +19,22 @@ Single-Page Application for displaying an image gallery with infinite scroll and
 
 ## Tech Stack
 
-- **Frontend:** Next.js 16, React 19, TypeScript, Tailwind CSS
+- **Frontend:** Next.js 16, React 19, TypeScript, Tailwind CSS, Framer Motion
 - **Quality:** ESLint, Prettier, Vitest, SonarQube, Husky, Commitlint
 - **CI/CD:** GitHub Actions
+
+## Code quality
+
+All checks must pass before submit. Current bar:
+
+- **ESLint** – `npm run lint` (no errors/warnings)
+- **Prettier** – `npm run format:check`
+- **TypeScript** – `npm run type-check`
+- **Unit tests** – `npm run test:coverage` (100% coverage)
+- **E2E** – `npm run test:e2e` (Playwright)
+- **SonarQube** – `npm run sonar` (Quality Gate pass: 0 open issues, 100% coverage, no duplications). Optional; see SETUP.md for Docker.
+
+See [docs/CODING_STANDARDS.md](./docs/CODING_STANDARDS.md) for full standards.
 
 ## Getting Started
 
@@ -41,18 +54,19 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Available Scripts
 
-| Command                 | Description                    |
-| ----------------------- | ------------------------------ |
-| `npm run dev`           | Run development server         |
-| `npm run build`         | Build for production           |
-| `npm run start`         | Run production server          |
-| `npm run lint`          | Run ESLint                     |
-| `npm run format`        | Format code with Prettier      |
-| `npm run test`          | Run unit tests (Vitest)        |
-| `npm run test:coverage` | Run tests with coverage report |
-| `npm run test:e2e`      | Run E2E tests (Playwright)     |
-| `npm run test:e2e:ui`   | Run E2E tests with UI mode     |
-| `npm run sonar`         | Run SonarQube scan (optional)  |
+| Command                   | Description                    |
+| ------------------------- | ------------------------------ |
+| `npm run dev`             | Run development server         |
+| `npm run build`           | Build for production           |
+| `npm run start`           | Run production server          |
+| `npm run lint`            | Run ESLint                     |
+| `npm run format`          | Format code with Prettier      |
+| `npm run test`            | Run unit tests (Vitest)        |
+| `npm run test:coverage`   | Run tests with coverage report |
+| `npm run test:e2e`        | Run E2E tests (Playwright)     |
+| `npm run test:e2e:ui`     | Run E2E tests with UI mode     |
+| `npm run test:e2e:report` | Open Playwright HTML report    |
+| `npm run sonar`           | Run SonarQube scan (optional)  |
 
 ### Project Structure
 

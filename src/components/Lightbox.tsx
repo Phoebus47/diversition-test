@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import type { ImageItem } from '@/lib/data/mock-images';
 import { LABELS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -89,14 +90,19 @@ export function Lightbox({
       ref={dialogRef}
       className={cn(
         'fixed inset-0 z-50 flex items-center justify-center cursor-pointer',
-        'bg-black/90 backdrop-blur-md',
-        'animate-lightbox-in',
         'border-0 p-0 w-screen h-screen max-w-none max-h-none',
       )}
       onClose={onClose}
       aria-modal
       aria-label={currentImage.alt}
     >
+      <motion.div
+        className="absolute inset-0 bg-black/90 backdrop-blur-md"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+      />
       {/* Backdrop as <button> so click/keyboard focus stay on a focusable element (a11y) */}
       <button
         type="button"
@@ -170,12 +176,16 @@ export function Lightbox({
       </div>
 
       {/* Inner content as <button> to stop click/keyboard from closing lightbox when interacting with image */}
-      <button
+      <motion.button
         type="button"
-        className="animate-lightbox-zoom relative z-10 flex flex-col items-center cursor-default border-0 bg-transparent p-0 text-left"
+        data-testid="lightbox-content"
+        className="relative z-10 flex flex-col items-center cursor-default border-0 bg-transparent p-0 text-left"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
         aria-label={LABELS.getAriaLightboxDetails(currentImage.alt)}
+        initial={false}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
       >
         <div className="relative overflow-hidden rounded-2xl shadow-2xl">
           <Image
@@ -205,7 +215,7 @@ export function Lightbox({
             {currentIndex! + 1} / {images.length}
           </span>
         </div>
-      </button>
+      </motion.button>
     </dialog>
   );
 }

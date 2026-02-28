@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import type { ImageItem } from '@/lib/data/mock-images';
 import { LABELS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -21,6 +22,7 @@ export function GalleryCard({
 }: Readonly<GalleryCardProps>) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleRipple = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     const btn = e.currentTarget;
@@ -41,16 +43,20 @@ export function GalleryCard({
   }, []);
 
   return (
-    <article
+    <motion.article
       className={cn(
-        'animate-card-in mb-5',
-        'group overflow-hidden',
+        'mb-5 group overflow-hidden',
         'rounded-(--card-radius) border border-card-border bg-card-bg',
-        'shadow-(--shadow-md)',
-        'transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
-        'hover:shadow-(--shadow-xl) hover:-translate-y-0.5',
+        'shadow-(--shadow-md) hover:shadow-(--shadow-xl)',
       )}
       data-testid="gallery-card"
+      whileHover={{
+        y: -4,
+        transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
+      }}
+      transition={{ type: 'tween', duration: 0.3 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image container — clickable for lightbox; --card-aspect reserves space to reduce CLS. Exception: style only for dynamic CSS var (aspect ratio from props); see CODING_STANDARDS §2. */}
       <button
@@ -111,8 +117,16 @@ export function GalleryCard({
               unoptimized
             />
             {/* View Icon Overlay (Affordance) */}
-            <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10 flex items-center justify-center opacity-0 group-hover:opacity-100">
-              <div className="p-3 rounded-full bg-white/25 text-white animate-overlay-in">
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/10"
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.div
+                className="p-3 rounded-full bg-white/25 text-white"
+                animate={{ scale: isHovered ? 1 : 0.9 }}
+                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
@@ -121,8 +135,8 @@ export function GalleryCard({
                     strokeLinecap="round"
                   />
                 </svg>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </>
         )}
       </button>
@@ -151,6 +165,6 @@ export function GalleryCard({
           </button>
         ))}
       </div>
-    </article>
+    </motion.article>
   );
 }

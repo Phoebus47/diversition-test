@@ -56,7 +56,10 @@ export function useInfiniteScroll({
           );
           setDisplayCount(next);
           observer.unobserve(sentinel);
-          requestAnimationFrame(() => observer.observe(sentinel));
+          requestAnimationFrame(() => {
+            const current = sentinelRef.current;
+            if (current) observer.observe(current);
+          });
         }
       },
       {

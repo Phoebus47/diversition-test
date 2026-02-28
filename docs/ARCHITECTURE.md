@@ -4,7 +4,7 @@
 
 ## Overview
 
-The Image Gallery is a client-side Single-Page Application built with Next.js 16, React 19, and TypeScript. It displays a masonry-style grid of placeholder images with hashtags, supports infinite scroll, and keyword filtering. Logo in header and footer (public/image-gallery-icon.png).
+The Image Gallery is a client-side Single-Page Application built with Next.js 16, React 19, and TypeScript. It displays a masonry-style grid of placeholder images with hashtags, supports infinite scroll, and keyword filtering. UI uses Framer Motion for animations; nav hides on scroll down and shows on scroll up. Logo in header and footer (`public/image-gallery-icon.webp`).
 
 ## High-Level Architecture
 
@@ -16,6 +16,7 @@ flowchart TB
         Pool["useImagePool"]
         Filter["useGalleryFilter"]
         Scroll["useInfiniteScroll"]
+        Nav["useScrollDirection"]
         Grid["ImageGrid"]
         Cards["GalleryCard[]"]
 
@@ -23,6 +24,7 @@ flowchart TB
         Gallery --> Pool
         Gallery --> Filter
         Gallery --> Scroll
+        Gallery --> Nav
         Gallery --> Grid
         Grid --> Cards
         Filter --> Grid
@@ -45,7 +47,7 @@ flowchart TB
 ```
 page.tsx (Server)
 └── GalleryClient (Client)
-    ├── header (logo)
+    ├── header (logo; visibility from useScrollDirection)
     ├── HashtagFilter
     ├── ImageGrid (ul/li)
     │   └── GalleryCard (×N)
@@ -62,14 +64,14 @@ page.tsx (Server)
 
 ## Tech Stack
 
-| Layer     | Technology                           |
-| --------- | ------------------------------------ |
-| Framework | Next.js 16 (App Router)              |
-| UI        | React 19, Tailwind CSS               |
-| Language  | TypeScript                           |
-| Images    | placehold.co (mock)                  |
-| State     | React useState/useMemo               |
-| Quality   | ESLint, Prettier, Vitest, Playwright |
+| Layer     | Technology                            |
+| --------- | ------------------------------------- |
+| Framework | Next.js 16 (App Router)               |
+| UI        | React 19, Tailwind CSS, Framer Motion |
+| Language  | TypeScript                            |
+| Images    | placehold.co (mock)                   |
+| State     | React useState/useMemo                |
+| Quality   | ESLint, Prettier, Vitest, Playwright  |
 
 ## File Structure
 
@@ -92,7 +94,7 @@ src/
 │   ├── BackToTop.tsx        # Scroll-to-top button
 │   └── Footer.tsx           # Footer with logo
 └── lib/
-    ├── constants.ts         # LABELS, logo path, PAGE_SIZE
+    ├── constants.ts         # LABELS, logo path, PAGE_SIZE, scroll thresholds
     ├── utils.ts             # cn()
     ├── db.ts                # Prisma client
     ├── data/
@@ -102,14 +104,15 @@ src/
         ├── use-image-pool.ts      # Fetch API or mock
         ├── use-infinite-scroll.ts
         ├── use-masonry-columns.ts
-        └── use-responsive-columns.ts
+        ├── use-responsive-columns.ts
+        └── use-scroll-direction.ts # Nav hide on scroll down, show on scroll up
 ```
 
 ## Testing Strategy
 
-- **Unit (Vitest + RTL):** 19 test files, 85 tests, coverage 100%. Run `npm run test` or `npm run test:ci`.
-- **E2E (Playwright):** Critical user flows (gallery load, filter, lightbox). Run `npm run test:e2e`.
-- **Performance:** `content-visibility: auto` on cards for off-screen rendering optimization.
+- **Unit (Vitest + RTL):** 20 test files, 93 tests, coverage 100%. Run `npm run test` or `npm run test:ci`.
+- **E2E (Playwright):** Critical user flows (gallery load, filter, clear filter, lightbox). Run `npm run test:e2e`; `npm run test:e2e:report` to open HTML report.
+- **Performance:** Masonry stagger uses capped delay and respects `prefers-reduced-motion`.
 
 ## API & Database
 

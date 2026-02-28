@@ -42,11 +42,12 @@
 
 ### 3. UI/UX
 
-- Logo (header + footer) from `public/image-gallery-icon.png`
+- Logo (header + footer) from `public/image-gallery-icon.webp`
 - Glassmorphism, design system (globals.css)
 - Lightbox (full-screen, next/prev, keyboard, zoom)
 - BackToTop, Footer
-- Ripple on hashtag click, card animations, shimmer loading
+- Ripple on hashtag click, card stagger (Framer Motion), shimmer loading
+- Nav hides on scroll down, shows on scroll up (useScrollDirection)
 - Sticky HashtagFilter
 
 ### 4. Data & API
@@ -67,18 +68,22 @@
 
 ### 6. Tests
 
-- **Unit:** 19 test files, 85 tests (Vitest + RTL), coverage 100%
-- **E2E:** Playwright (test:e2e) – 4 tests
-- Covered: GalleryCard, ImageGrid, HashtagFilter, Lightbox, BackToTop, Footer, GalleryClient, page, layout, API route, hooks (infinite-scroll, image-pool, gallery-filter, masonry, responsive-columns), mock-data, utils, db
+- **Unit:** 20 test files, 93 tests (Vitest + RTL), coverage 100%
+- **E2E:** Playwright (test:e2e) – 4 tests; test:e2e:report to open HTML report
+- Covered: GalleryCard, ImageGrid, HashtagFilter, Lightbox, BackToTop, Footer, GalleryClient, page, layout, API route, hooks (infinite-scroll, image-pool, gallery-filter, masonry, responsive-columns, scroll-direction), mock-data, utils, db
 
-### 7. Quality
+### 7. Code quality
 
-- `npm run lint` – pass
-- `npm run format:check` – pass
-- `npm run type-check` – pass
-- `npm run test:ci` – pass
-- `npm run build` – pass
-- `npm run sonar` – pass (SonarQube)
+All gates pass. Bar: 0 open issues (Security, Reliability, Maintainability), 100% unit coverage, 0% duplications, SonarQube Quality Gate passed.
+
+| Check      | Command                | Status  |
+| ---------- | ---------------------- | ------- |
+| ESLint     | `npm run lint`         | ✅ pass |
+| Prettier   | `npm run format:check` | ✅ pass |
+| TypeScript | `npm run type-check`   | ✅ pass |
+| Unit tests | `npm run test:ci`      | ✅ pass |
+| Build      | `npm run build`        | ✅ pass |
+| SonarQube  | `npm run sonar`        | ✅ pass |
 
 ### 8. Deployment
 
@@ -95,22 +100,23 @@
 
 ## Key files
 
-| Path                                   | Purpose                                         |
-| -------------------------------------- | ----------------------------------------------- |
-| `src/app/page.tsx`                     | Home, renders GalleryClient                     |
-| `src/app/components/GalleryClient.tsx` | Client gallery, filter + scroll + grid          |
-| `src/components/GalleryCard.tsx`       | Single card, image + hashtags, lightbox trigger |
-| `src/components/ImageGrid.tsx`         | Masonry grid (ul/li, semantic list)             |
-| `src/components/HashtagFilter.tsx`     | Sticky tag filter                               |
-| `src/components/Lightbox.tsx`          | Full-screen viewer                              |
-| `src/components/BackToTop.tsx`         | Scroll-to-top button                            |
-| `src/components/Footer.tsx`            | Footer with logo                                |
-| `src/lib/constants.ts`                 | LABELS, logo path, page size                    |
-| `src/lib/hooks/use-image-pool.ts`      | Fetch from API or mock fallback                 |
-| `src/lib/hooks/use-infinite-scroll.ts` | Sentinel-based load more                        |
-| `src/lib/hooks/use-gallery-filter.ts`  | Filter by hashtag                               |
-| `src/lib/hooks/use-masonry-columns.ts` | Masonry layout distribution                     |
-| `src/lib/data/mock-images.ts`          | Mock data (placehold.co)                        |
-| `src/app/api/images/route.ts`          | GET images API                                  |
-| `docs/ARCHITECTURE.md`                 | Architecture diagram                            |
-| `docs/DEPLOY.md`                       | Deployment guide                                |
+| Path                                    | Purpose                                         |
+| --------------------------------------- | ----------------------------------------------- |
+| `src/app/page.tsx`                      | Home, renders GalleryClient                     |
+| `src/app/components/GalleryClient.tsx`  | Client gallery, filter + scroll + grid          |
+| `src/components/GalleryCard.tsx`        | Single card, image + hashtags, lightbox trigger |
+| `src/components/ImageGrid.tsx`          | Masonry grid (ul/li, semantic list)             |
+| `src/components/HashtagFilter.tsx`      | Sticky tag filter                               |
+| `src/components/Lightbox.tsx`           | Full-screen viewer                              |
+| `src/components/BackToTop.tsx`          | Scroll-to-top button                            |
+| `src/components/Footer.tsx`             | Footer with logo                                |
+| `src/lib/constants.ts`                  | LABELS, logo path, page size                    |
+| `src/lib/hooks/use-image-pool.ts`       | Fetch from API or mock fallback                 |
+| `src/lib/hooks/use-infinite-scroll.ts`  | Sentinel-based load more                        |
+| `src/lib/hooks/use-gallery-filter.ts`   | Filter by hashtag                               |
+| `src/lib/hooks/use-masonry-columns.ts`  | Masonry layout distribution                     |
+| `src/lib/hooks/use-scroll-direction.ts` | Nav visibility (hide on scroll down)            |
+| `src/lib/data/mock-images.ts`           | Mock data (placehold.co)                        |
+| `src/app/api/images/route.ts`           | GET images API                                  |
+| `docs/ARCHITECTURE.md`                  | Architecture diagram                            |
+| `docs/DEPLOY.md`                        | Deployment guide                                |

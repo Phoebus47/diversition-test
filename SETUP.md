@@ -92,13 +92,14 @@ Add or edit in `package.json`:
     "test:ci": "vitest run --coverage --passWithNoTests",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
     "sonar": "npx dotenv-cli -- npx sonarqube-scanner",
     "db:generate": "prisma generate",
     "db:push": "npx dotenv-cli -e .env -- prisma db push",
     "db:seed": "npx dotenv-cli -e .env -- prisma db seed",
     "db:studio": "prisma studio",
     "lint-staged": "lint-staged",
-    "prepare": "husky || true"
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx}": ["prettier --write", "eslint --fix"],
@@ -174,16 +175,17 @@ npm run build
 
 ## Common Commands
 
-| Command               | Description                         |
-| --------------------- | ----------------------------------- |
-| `npm run dev`         | Run dev server                      |
-| `npm run lint`        | Run ESLint                          |
-| `npm run format`      | Format with Prettier                |
-| `npm run test`        | Run unit tests                      |
-| `npm run test:ci`     | Run tests with coverage (CI)        |
-| `npm run test:e2e`    | Run E2E tests (Playwright)          |
-| `npm run test:e2e:ui` | Run E2E tests with UI mode          |
-| `npm run sonar`       | Run SonarQube scan (Sonar required) |
+| Command                   | Description                         |
+| ------------------------- | ----------------------------------- |
+| `npm run dev`             | Run dev server                      |
+| `npm run lint`            | Run ESLint                          |
+| `npm run format`          | Format with Prettier                |
+| `npm run test`            | Run unit tests                      |
+| `npm run test:ci`         | Run tests with coverage (CI)        |
+| `npm run test:e2e`        | Run E2E tests (Playwright)          |
+| `npm run test:e2e:ui`     | Run E2E tests with UI mode          |
+| `npm run test:e2e:report` | Open Playwright HTML report         |
+| `npm run sonar`           | Run SonarQube scan (Sonar required) |
 
 ---
 

@@ -41,12 +41,12 @@ describe('BackToTop', () => {
     act(() => {
       fireEvent.scroll(window);
     });
-    expect(btn).toHaveClass('opacity-0');
+    expect(btn).toHaveClass('pointer-events-none');
 
     Object.defineProperty(window, 'scrollY', { value: 700, writable: true });
     act(() => {
       fireEvent.scroll(window);
     });
-    expect(btn).toHaveClass('opacity-100');
+    expect(btn).not.toHaveClass('pointer-events-none');
   });
 });

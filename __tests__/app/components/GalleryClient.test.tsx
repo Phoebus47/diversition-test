@@ -14,6 +14,10 @@ vi.mock('@/lib/hooks/use-infinite-scroll', () => ({
 vi.mock('@/lib/hooks/use-responsive-columns', () => ({
   useResponsiveColumns: () => 4,
 }));
+const mockUseScrollDirection = vi.fn();
+vi.mock('@/lib/hooks/use-scroll-direction', () => ({
+  useScrollDirection: () => mockUseScrollDirection(),
+}));
 
 // Mock components to isolate GalleryClient orchestration logic
 vi.mock('@/components/ImageGrid', () => ({
@@ -58,8 +62,22 @@ describe('GalleryClient Logic Verification', () => {
     cleanup();
   });
 
+  it('hides header when scroll direction hook returns false', () => {
+    mockUseImagePool.mockReturnValue({ images: [], isLoading: false });
+    mockUseInfiniteScroll.mockReturnValue({
+      images: [],
+      hasMore: false,
+      sentinelRef: { current: null },
+    });
+    mockUseScrollDirection.mockReturnValue(false);
+    render(<GalleryClient />);
+    const header = document.querySelector('header');
+    expect(header).toHaveClass('-translate-y-full');
+  });
+
   it('exercises all logic paths including empty and rogue clicks', async () => {
     const pooled = { id: 'p1' };
+    mockUseScrollDirection.mockReturnValue(true);
 
     // 1. Loading
     mockUseImagePool.mockReturnValue({ images: [], isLoading: true });

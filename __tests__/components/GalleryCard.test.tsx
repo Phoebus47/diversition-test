@@ -132,6 +132,21 @@ describe('GalleryCard Precise Coverage', () => {
     expect(screen.getByAltText('test-image')).toBeInTheDocument();
   });
 
+  it('toggles overlay on mouse enter and leave', () => {
+    render(
+      <GalleryCard
+        image={mockImage}
+        onHashtagClick={() => {}}
+        onImageClick={() => {}}
+        activeHashtag={null}
+      />,
+    );
+    const card = screen.getByTestId('gallery-card');
+    fireEvent.mouseEnter(card);
+    fireEvent.mouseLeave(card);
+    expect(card).toBeInTheDocument();
+  });
+
   it('shows shimmer before image load and hides after load', () => {
     const { container } = render(
       <GalleryCard

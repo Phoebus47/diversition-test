@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { LABELS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
@@ -13,13 +14,16 @@ export function HashtagFilter({
   if (!activeHashtag) return null;
 
   return (
-    <output
+    <motion.output
       className={cn(
         'inline-flex items-center gap-3',
         'rounded-full border border-filter-border bg-filter-bg px-4 py-2',
         'shadow-(--shadow-sm)',
       )}
       aria-live="polite"
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
     >
       <span className="text-sm text-text-secondary">{LABELS.filteringBy}</span>
       <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-white">
@@ -52,6 +56,6 @@ export function HashtagFilter({
           />
         </svg>
       </button>
-    </output>
+    </motion.output>
   );
 }

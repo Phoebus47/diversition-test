@@ -15,6 +15,7 @@ export const LABELS = {
   browseFilterHint: 'Browse & filter by hashtags',
   filteringBy: 'Filtering by',
   /* A11y / aria-labels */
+  ariaImageGrid: 'Image grid',
   ariaBackToTop: 'Back to top',
   ariaCloseLightbox: 'Close lightbox',
   ariaPreviousImage: 'Previous image',
@@ -36,6 +37,9 @@ export const SCROLL_SENTINEL_THRESHOLD = 0.1;
 
 /** Scroll Y in px above which BackToTop button is shown */
 export const BACK_TO_TOP_VISIBLE_SCROLL_Y = 600;
+
+/** Scroll Y in px below which nav is always visible; above this, nav hides on scroll down */
+export const SCROLL_NAV_VISIBLE_THRESHOLD = 80;
 
 /** Logo image (public path) */
 export const LOGO_SRC = '/image-gallery-icon.webp';

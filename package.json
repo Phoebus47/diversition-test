@@ -17,6 +17,7 @@
     "test:ci": "vitest run --coverage --passWithNoTests",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
     "sonar": "npx dotenv-cli -- npx sonarqube-scanner",
     "db:generate": "prisma generate",
     "db:push": "npx dotenv-cli -e .env -- prisma db push",
@@ -37,6 +38,7 @@
   "dependencies": {
     "@prisma/client": "^6.19.2",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.34.3",
     "next": "16.1.6",
     "prisma": "^6.19.2",
     "react": "19.2.3",

@@ -19,6 +19,9 @@ import type { ImageItem } from '@/lib/data/mock-images';
 import { useGalleryFilter } from '@/lib/hooks/use-gallery-filter';
 import { useImagePool } from '@/lib/hooks/use-image-pool';
 import { useInfiniteScroll } from '@/lib/hooks/use-infinite-scroll';
+import { useScrollDirection } from '@/lib/hooks/use-scroll-direction';
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 export function GalleryClient() {
   const { activeHashtag, filter, onHashtagClick, onClearFilter } =
@@ -32,6 +35,7 @@ export function GalleryClient() {
     filter,
   });
 
+  const navVisible = useScrollDirection();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const handleImageClick = useCallback(
@@ -53,19 +57,29 @@ export function GalleryClient() {
   function renderMainContent() {
     if (poolLoading) {
       return (
-        <div className="flex flex-col items-center justify-center py-32">
+        <motion.div
+          className="flex flex-col items-center justify-center py-32"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25 }}
+        >
           <div className="mb-4 flex gap-1.5">
             <span className="animate-pulse-dot inline-block h-2 w-2 rounded-full bg-accent" />
             <span className="animate-pulse-dot inline-block h-2 w-2 rounded-full bg-accent [animation-delay:0.15s]" />
             <span className="animate-pulse-dot inline-block h-2 w-2 rounded-full bg-accent [animation-delay:0.3s]" />
           </div>
           <p className="text-sm text-text-tertiary">{LABELS.loadingGallery}</p>
-        </div>
+        </motion.div>
       );
     }
     if (images.length === 0) {
       return (
-        <div className="flex flex-col items-center justify-center py-32">
+        <motion.div
+          className="flex flex-col items-center justify-center py-32"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
+        >
           <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-subtle">
             <svg
               width="28"
@@ -96,7 +110,7 @@ export function GalleryClient() {
           <p className="mt-1 text-sm text-text-tertiary">
             {LABELS.tryDifferentHashtag}
           </p>
-        </div>
+        </motion.div>
       );
     }
     return (
@@ -133,7 +147,13 @@ export function GalleryClient() {
 
   return (
     <div className="min-h-screen w-full">
-      <header className="sticky top-0 z-10 border-b border-border-primary bg-surface-primary/80 backdrop-blur-lg">
+      <header
+        className={cn(
+          'sticky top-0 z-10 border-b border-border-primary bg-surface-primary/80 backdrop-blur-lg',
+          'transition-transform duration-300 ease-out',
+          navVisible ? 'translate-y-0' : '-translate-y-full',
+        )}
+      >
         <div className="mx-auto flex max-w-(--page-max-width) items-center justify-between px-6 py-4 lg:px-8">
           <h1 className="flex items-center">
             <Image

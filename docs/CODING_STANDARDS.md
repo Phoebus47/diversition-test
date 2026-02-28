@@ -300,7 +300,7 @@ const LABELS = {
 
 ## 17. SonarQube / Code Quality
 
-- Run `npm run sonar` (when SonarQube server is running).
+- Run `npm run sonar` (when SonarQube server is running). Quality Gate must pass (targets: 0 open issues, 100% coverage, no duplications).
 - **Front-end:** Use types, no `any`, a11y, design tokens.
 - **Back-end:** Validate input, use correct status codes.
 - **Tests:** Test behavior, mock external deps.

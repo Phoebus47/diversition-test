@@ -1,8 +1,11 @@
 import { expect, test } from '@playwright/test';
 
+// To see the browser state: run `npm run test:e2e` then `npm run test:e2e:report`,
+// or in UI mode expand a test and click a step after "Navigate" in the trace.
+
 test.describe('Image Gallery', () => {
-  test('displays gallery title and images', async ({ page }) => {
-    await page.goto('/');
+  test('displays gallery title and images', async ({ page }, testInfo) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     await expect(
       page.getByRole('heading', { name: /image gallery/i }),
@@ -11,6 +14,11 @@ test.describe('Image Gallery', () => {
     await expect(
       page.getByRole('button', { name: /view.*full screen/i }).first(),
     ).toBeVisible();
+
+    await testInfo.attach('gallery-page', {
+      body: await page.screenshot(),
+      contentType: 'image/png',
+    });
   });
 
   test('filters images when clicking hashtag', async ({ page }) => {
