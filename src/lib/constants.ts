@@ -5,6 +5,8 @@ export const LABELS = {
   noResults: 'No images match this filter',
   galleryTitle: 'Image Gallery',
   clearFilter: 'Clear filter',
+  footerBrand: 'Image Gallery · Thanakrit Thanyawatsakul',
+  footerCopyright: '© 2026 Thanakrit Thanyawatsakul. Built for Diversition.',
 } as const;
 
 export const PAGE_SIZE = 12;

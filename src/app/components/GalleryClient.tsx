@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { BackToTop } from '@/components/BackToTop';
+import { Footer } from '@/components/Footer';
 import { HashtagFilter } from '@/components/HashtagFilter';
 import { ImageGrid } from '@/components/ImageGrid';
 import { Lightbox } from '@/components/Lightbox';
@@ -137,6 +138,9 @@ export function GalleryClient() {
         onClose={handleLightboxClose}
         onNavigate={handleNavigate}
       />
+
+      {/* Footer */}
+      <Footer />
 
       {/* Back to top */}
       <BackToTop />
