@@ -2,7 +2,7 @@
 
 **Last updated:** February 28, 2026
 
-Step-by-step project setup guide (run `npx create` yourself).
+Step-by-step project setup guide (run `npx create` yourself). The app is also **deployed on Vercel**: [https://image-gallery-thanakrit-thanyawatsa.vercel.app/](https://image-gallery-thanakrit-thanyawatsa.vercel.app/).
 
 ---
 
@@ -12,8 +12,8 @@ Step-by-step project setup guide (run `npx create` yourself).
 
 ```bash
 cd ~/projects
-npx create-next-app@latest diversition-test --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
-cd diversition-test
+npx create-next-app@latest image-gallery --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
+cd image-gallery
 ```
 
 Then copy files from this repo (PRD.md, SETUP.md, .cursorrules, .cursor/, .github/, .docker/, and root config files) into the project.
@@ -180,6 +180,7 @@ npm run build
 | `npm run lint`        | Run ESLint                          |
 | `npm run format`      | Format with Prettier                |
 | `npm run test`        | Run unit tests                      |
+| `npm run test:ci`     | Run tests with coverage (CI)        |
 | `npm run test:e2e`    | Run E2E tests (Playwright)          |
 | `npm run test:e2e:ui` | Run E2E tests with UI mode          |
 | `npm run sonar`       | Run SonarQube scan (Sonar required) |

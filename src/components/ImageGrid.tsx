@@ -42,10 +42,16 @@ export function ImageGrid({
   const columns = useMasonryColumns(images, columnCount);
 
   return (
-    <div className="flex gap-5" data-testid="image-grid">
+    <ul
+      className="flex list-none gap-5 p-0"
+      aria-label="Image grid"
+      data-testid="image-grid"
+    >
       {columns.map((column, colIndex) => (
-        <div
-          key={column.map((img) => img.id).join('-') || `col-${colIndex}`}
+        <li
+          key={
+            column.length > 0 ? `col-${column[0].id}` : `col-empty-${colIndex}`
+          }
           className="flex flex-1 flex-col"
         >
           {column.map((image, imgIndex) => {
@@ -65,8 +71,8 @@ export function ImageGrid({
               </div>
             );
           })}
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

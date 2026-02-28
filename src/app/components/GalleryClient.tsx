@@ -1,12 +1,20 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import Image from 'next/image';
 import { BackToTop } from '@/components/BackToTop';
 import { Footer } from '@/components/Footer';
 import { HashtagFilter } from '@/components/HashtagFilter';
 import { ImageGrid } from '@/components/ImageGrid';
 import { Lightbox } from '@/components/Lightbox';
-import { INITIAL_LOAD_COUNT, LABELS, PAGE_SIZE } from '@/lib/constants';
+import {
+  INITIAL_LOAD_COUNT,
+  LABELS,
+  LOGO_HEIGHT,
+  LOGO_SRC,
+  LOGO_WIDTH,
+  PAGE_SIZE,
+} from '@/lib/constants';
 import type { ImageItem } from '@/lib/data/mock-images';
 import { useGalleryFilter } from '@/lib/hooks/use-gallery-filter';
 import { useImagePool } from '@/lib/hooks/use-image-pool';
@@ -127,8 +135,16 @@ export function GalleryClient() {
     <div className="min-h-screen w-full">
       <header className="sticky top-0 z-10 border-b border-border-primary bg-surface-primary/80 backdrop-blur-lg">
         <div className="mx-auto flex max-w-(--page-max-width) items-center justify-between px-6 py-4 lg:px-8">
-          <h1 className="bg-linear-to-r from-(--gradient-start) via-(--gradient-mid) to-(--gradient-end) bg-clip-text text-xl font-bold tracking-tight text-transparent">
-            {LABELS.galleryTitle}
+          <h1 className="flex items-center">
+            <Image
+              src={LOGO_SRC}
+              alt={LABELS.galleryTitle}
+              width={LOGO_WIDTH}
+              height={LOGO_HEIGHT}
+              className="h-8 w-auto object-contain sm:h-9"
+              priority
+              loading="eager"
+            />
           </h1>
 
           <div className="flex items-center gap-3">

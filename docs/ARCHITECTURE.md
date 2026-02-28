@@ -4,7 +4,7 @@
 
 ## Overview
 
-The Image Gallery is a client-side Single-Page Application built with Next.js 16, React 19, and TypeScript. It displays a masonry-style grid of placeholder images with hashtags, supports infinite scroll, and keyword filtering.
+The Image Gallery is a client-side Single-Page Application built with Next.js 16, React 19, and TypeScript. It displays a masonry-style grid of placeholder images with hashtags, supports infinite scroll, and keyword filtering. Logo in header and footer (public/image-gallery-icon.png).
 
 ## High-Level Architecture
 
@@ -45,18 +45,19 @@ flowchart TB
 ```
 page.tsx (Server)
 └── GalleryClient (Client)
+    ├── header (logo)
     ├── HashtagFilter
-    ├── ImageGrid
+    ├── ImageGrid (ul/li)
     │   └── GalleryCard (×N)
     ├── Lightbox
-    ├── Footer
+    ├── Footer (logo)
     └── BackToTop
 ```
 
 ## Data Flow
 
 1. **Initial Load**: `GalleryClient` mounts → `useImagePool` fetches from `/api/images` (or mock on error) → `useInfiniteScroll` slices first 12 from pool → `ImageGrid` renders `GalleryCard`s.
-2. **Infinite Scroll**: IntersectionObserver watches a sentinel div → when visible, `displayCount` increases → more images sliced from filtered pool.
+2. **Infinite Scroll**: IntersectionObserver watches a sentinel div → when it enters view, `displayCount` increases → more images sliced. Unobserve/re-observe after each load so scrolling back to top then down again loads more.
 3. **Hashtag Filter**: User clicks hashtag → `useGalleryFilter` sets `activeHashtag` → filter function updates → `useInfiniteScroll` re-filters pool → slice reflects filtered set.
 
 ## Tech Stack
@@ -85,13 +86,13 @@ src/
 │           └── route.ts      # GET images (Prisma)
 ├── components/
 │   ├── GalleryCard.tsx       # Single image + hashtags
-│   ├── ImageGrid.tsx        # Masonry grid layout
+│   ├── ImageGrid.tsx        # Masonry grid (ul/li)
 │   ├── HashtagFilter.tsx     # Active filter + clear
 │   ├── Lightbox.tsx         # Full-screen viewer
 │   ├── BackToTop.tsx        # Scroll-to-top button
-│   └── Footer.tsx           # Footer branding
+│   └── Footer.tsx           # Footer with logo
 └── lib/
-    ├── constants.ts         # Copy, PAGE_SIZE, etc.
+    ├── constants.ts         # LABELS, logo path, PAGE_SIZE
     ├── utils.ts             # cn()
     ├── db.ts                # Prisma client
     ├── data/
@@ -106,7 +107,7 @@ src/
 
 ## Testing Strategy
 
-- **Unit (Vitest + RTL):** Hooks, components, utils, mock data. Run `npm run test`.
+- **Unit (Vitest + RTL):** 19 test files, 85 tests, coverage 100%. Run `npm run test` or `npm run test:ci`.
 - **E2E (Playwright):** Critical user flows (gallery load, filter, lightbox). Run `npm run test:e2e`.
 - **Performance:** `content-visibility: auto` on cards for off-screen rendering optimization.
 
@@ -117,6 +118,6 @@ src/
 
 ## Deployment
 
-- **Docker**: `docker compose up -d` – App + MySQL. See [docs/DEPLOY.md](./DEPLOY.md).
-- **Vercel**: Add `DATABASE_URL` (PlanetScale/Neon). See vercel.json.
+- **Vercel**: App is deployed on Vercel. [Live](https://image-gallery-thanakrit-thanyawatsa.vercel.app/). Optional: add `DATABASE_URL` (PlanetScale/Neon) in Vercel for real DB.
+- **Docker**: `docker compose up -d` – App + MySQL locally. See [docs/DEPLOY.md](./DEPLOY.md).
 - **Ubuntu + PM2**: See ecosystem.config.cjs and [docs/DEPLOY.md](./DEPLOY.md).

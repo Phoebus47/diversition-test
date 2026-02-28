@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { getMockImagePool } from '@/lib/data/mock-images';
 import type { ImageItem } from '@/lib/data/mock-images';
 
 export async function GET() {
@@ -20,9 +21,6 @@ export async function GET() {
 
     return NextResponse.json(items);
   } catch {
-    return NextResponse.json(
-      { error: 'Failed to fetch images' },
-      { status: 500 },
-    );
+    return NextResponse.json(getMockImagePool());
   }
 }

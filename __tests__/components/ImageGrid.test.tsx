@@ -64,7 +64,9 @@ describe('ImageGrid', () => {
       />,
     );
 
-    expect(screen.getByTestId('image-grid')).toBeInTheDocument();
+    expect(
+      screen.getByRole('list', { name: /image grid/i }),
+    ).toBeInTheDocument();
     expect(screen.getByAltText('Test 1')).toBeInTheDocument();
     expect(screen.getByAltText('Test 2')).toBeInTheDocument();
   });
@@ -78,7 +80,9 @@ describe('ImageGrid', () => {
         activeHashtag="#nature"
       />,
     );
-    expect(screen.getByTestId('image-grid')).toBeInTheDocument();
+    expect(
+      screen.getByRole('list', { name: /image grid/i }),
+    ).toBeInTheDocument();
     expect(screen.getByAltText('Test 1')).toBeInTheDocument();
   });
 
@@ -92,7 +96,9 @@ describe('ImageGrid', () => {
         activeHashtag={null}
       />,
     );
-    expect(screen.getByTestId('image-grid')).toBeInTheDocument();
+    expect(
+      screen.getByRole('list', { name: /image grid/i }),
+    ).toBeInTheDocument();
     expect(screen.getByAltText('Image 0')).toBeInTheDocument();
     expect(screen.getByAltText('Image 14')).toBeInTheDocument();
   });
@@ -106,7 +112,7 @@ describe('ImageGrid', () => {
         activeHashtag={null}
       />,
     );
-    const grid = screen.getByTestId('image-grid');
+    const grid = screen.getByRole('list', { name: /image grid/i });
     const wrappers = grid.querySelectorAll('.animate-card-in');
     expect(wrappers.length).toBeGreaterThanOrEqual(1);
   });
@@ -121,7 +127,9 @@ describe('ImageGrid', () => {
         activeHashtag={null}
       />,
     );
-    expect(screen.getByTestId('image-grid')).toBeInTheDocument();
+    expect(
+      screen.getByRole('list', { name: /image grid/i }),
+    ).toBeInTheDocument();
     expect(screen.getByAltText('Test 1')).toBeInTheDocument();
     expect(screen.getByAltText('Test 2')).toBeInTheDocument();
   });

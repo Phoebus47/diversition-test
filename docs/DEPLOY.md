@@ -2,7 +2,17 @@
 
 **Last updated:** February 28, 2026
 
-## Option 1: Docker (Recommended for full stack)
+This app is **deployed on Vercel**. The live URL is in [docs/PROJECT_STATUS.md](./PROJECT_STATUS.md). Below are options for running locally or self-hosted.
+
+## Option 1: Vercel (deployed)
+
+The app is deployed on Vercel. Reviewers can use the live URL directly.
+
+- **Live URL:** [https://image-gallery-thanakrit-thanyawatsa.vercel.app/](https://image-gallery-thanakrit-thanyawatsa.vercel.app/)
+- Without `DATABASE_URL` on Vercel, the app uses mock data.
+- To connect a database: add env var `DATABASE_URL` (e.g. PlanetScale, Neon) in Vercel project settings, then redeploy.
+
+## Option 2: Docker (full stack locally)
 
 ```bash
 # Build and run
@@ -14,13 +24,6 @@ docker compose exec app npm run db:seed
 
 # Open http://localhost:3000
 ```
-
-## Option 2: Vercel (Frontend + API)
-
-1. Connect repo to Vercel
-2. Add env var: `DATABASE_URL` (e.g. PlanetScale, Neon)
-3. Deploy – Vercel runs `prisma generate && next build`
-4. If no DB: app falls back to mock data
 
 ## Option 3: Ubuntu Server + PM2
 

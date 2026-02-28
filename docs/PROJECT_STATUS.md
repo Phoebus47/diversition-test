@@ -2,7 +2,7 @@
 
 **Last updated:** February 28, 2026  
 **Deadline:** March 1, 2026, 8:00 PM  
-**Submit to:** hr@diversition.co.th
+**Submit to:** See PRD §6
 
 ---
 
@@ -15,7 +15,7 @@
 | **Deploy doc**        | ✅ Done        |
 | **Tests & coverage**  | ✅ 100% (unit) |
 | **Quality gates**     | ✅ All passing |
-| **Deploy / Live URL** | ⏳ Optional    |
+| **Deploy / Live URL** | ✅ Vercel      |
 
 ---
 
@@ -42,6 +42,7 @@
 
 ### 3. UI/UX
 
+- Logo (header + footer) from `public/image-gallery-icon.png`
 - Glassmorphism, design system (globals.css)
 - Lightbox (full-screen, next/prev, keyboard, zoom)
 - BackToTop, Footer
@@ -66,7 +67,7 @@
 
 ### 6. Tests
 
-- **Unit:** 19 test files, 85 tests (Vitest + RTL), coverage thresholds 98%
+- **Unit:** 19 test files, 85 tests (Vitest + RTL), coverage 100%
 - **E2E:** Playwright (test:e2e) – 4 tests
 - Covered: GalleryCard, ImageGrid, HashtagFilter, Lightbox, BackToTop, Footer, GalleryClient, page, layout, API route, hooks (infinite-scroll, image-pool, gallery-filter, masonry, responsive-columns), mock-data, utils, db
 
@@ -79,11 +80,16 @@
 - `npm run build` – pass
 - `npm run sonar` – pass (SonarQube)
 
+### 8. Deployment
+
+- **Vercel:** App is deployed on Vercel.
+- **Live URL:** [https://image-gallery-thanakrit-thanyawatsa.vercel.app/](https://image-gallery-thanakrit-thanyawatsa.vercel.app/)
+
 ---
 
 ## Optional / not done
 
-- **Deploy & Live URL** – Deploy to Vercel/Docker/Ubuntu and send URL (recommended)
+- _(None; deployment to Vercel is done.)_
 
 ---
 
@@ -94,11 +100,12 @@
 | `src/app/page.tsx`                     | Home, renders GalleryClient                     |
 | `src/app/components/GalleryClient.tsx` | Client gallery, filter + scroll + grid          |
 | `src/components/GalleryCard.tsx`       | Single card, image + hashtags, lightbox trigger |
-| `src/components/ImageGrid.tsx`         | Masonry grid                                    |
+| `src/components/ImageGrid.tsx`         | Masonry grid (ul/li, semantic list)             |
 | `src/components/HashtagFilter.tsx`     | Sticky tag filter                               |
 | `src/components/Lightbox.tsx`          | Full-screen viewer                              |
 | `src/components/BackToTop.tsx`         | Scroll-to-top button                            |
-| `src/components/Footer.tsx`            | Footer branding                                 |
+| `src/components/Footer.tsx`            | Footer with logo                                |
+| `src/lib/constants.ts`                 | LABELS, logo path, page size                    |
 | `src/lib/hooks/use-image-pool.ts`      | Fetch from API or mock fallback                 |
 | `src/lib/hooks/use-infinite-scroll.ts` | Sentinel-based load more                        |
 | `src/lib/hooks/use-gallery-filter.ts`  | Filter by hashtag                               |

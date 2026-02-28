@@ -126,7 +126,9 @@ describe('GalleryCard Precise Coverage', () => {
         priority
       />,
     );
-    expect(screen.getByTestId('gallery-card')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /view.*full screen/i }),
+    ).toBeInTheDocument();
     expect(screen.getByAltText('test-image')).toBeInTheDocument();
   });
 

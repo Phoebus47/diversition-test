@@ -37,11 +37,7 @@ describe('GET /api/images', () => {
     });
   });
 
-  it('returns 500 on database error', async () => {
-    const consoleErrorSpy = vi
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
-
+  it('returns mock images on database error', async () => {
     const { prisma } = await import('@/lib/db');
     vi.mocked(prisma.image.findMany).mockRejectedValue(new Error('DB error'));
 
@@ -49,9 +45,16 @@ describe('GET /api/images', () => {
     const res = await GET();
     const data = await res.json();
 
-    expect(res.status).toBe(500);
-    expect(data.error).toBe('Failed to fetch images');
-
-    consoleErrorSpy.mockRestore();
+    expect(res.status).toBe(200);
+    expect(Array.isArray(data)).toBe(true);
+    expect(data.length).toBeGreaterThan(0);
+    expect(data[0]).toMatchObject({
+      id: expect.any(String),
+      src: expect.any(String),
+      alt: expect.any(String),
+      width: expect.any(Number),
+      height: expect.any(Number),
+      hashtags: expect.any(Array),
+    });
   });
 });

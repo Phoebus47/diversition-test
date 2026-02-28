@@ -4,8 +4,11 @@
 
 Single-Page Application for displaying an image gallery with infinite scroll and keyword filtering.
 
+**Live:** [https://image-gallery-thanakrit-thanyawatsa.vercel.app/](https://image-gallery-thanakrit-thanyawatsa.vercel.app/)
+
 ## Key Features
 
+- **Logo** – Header and footer use `public/image-gallery-icon.png`.
 - **Premium UI & UX** – Glassmorphism, tailored animations, and vibrant design system using Tailwind v4.
 - **Advanced Masonry Layout** – Stable JavaScript-based distribution algorithm that eliminates layout shift (Zero Layout Shift) during infinite scroll.
 - **Interactive Lightbox** – Full-screen modal with Next/Prev navigation, keyboard support (Arrow keys/ESC), and zoom transitions.
@@ -76,6 +79,18 @@ npm run db:seed
 npm run db:studio   # Optional: Prisma Studio UI
 ```
 
+## Ways to run (for reviewers)
+
+You can run and test the app in three ways:
+
+| Option          | Description                                                                                                                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Vercel**      | **Deployed.** [Live URL](https://image-gallery-thanakrit-thanyawatsa.vercel.app/). No setup required. Uses mock data when no database is connected.          |
+| **Docker**      | From the project folder: `docker compose up -d`, then `docker compose exec app npm run db:push && npm run db:seed`. App at http://localhost:3000 with MySQL. |
+| **Zip / Clone** | Unzip or clone the repo → `npm install` → `npm run dev` → open http://localhost:3000. Uses mock data when no database is configured.                         |
+
+See [docs/DEPLOY.md](./docs/DEPLOY.md) and [SETUP.md](./SETUP.md) for details.
+
 ## Documentation
 
 - [PRD.md](./PRD.md) – Product Requirements Document
@@ -87,8 +102,8 @@ npm run db:studio   # Optional: Prisma Studio UI
 
 ## Deployment
 
+- **Vercel**: App is deployed on Vercel. See [docs/DEPLOY.md](./docs/DEPLOY.md) for details.
 - **Docker**: `docker compose up -d` – App + MySQL (see [docs/DEPLOY.md](./docs/DEPLOY.md))
-- **Vercel**: Connect repo, add `DATABASE_URL` env var
 - **Ubuntu + PM2**: See [docs/DEPLOY.md](./docs/DEPLOY.md)
 
 Build for production:

@@ -268,6 +268,7 @@ __tests__/                 # Test files
 ### Testing stack
 
 - **Unit tests:** Vitest + React Testing Library (RTL).
+- **E2E tests:** Playwright (`npm run test:e2e`). Use for critical user flows (gallery load, filter, lightbox).
 
 ### Test file conventions
 

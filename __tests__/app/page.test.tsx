@@ -16,6 +16,8 @@ describe('Home', () => {
     });
     render(<Home />);
     expect(document.querySelector('main')).toBeInTheDocument();
-    expect(screen.getByTestId('image-grid')).toBeInTheDocument();
+    expect(
+      screen.getByRole('list', { name: /image grid/i }),
+    ).toBeInTheDocument();
   });
 });

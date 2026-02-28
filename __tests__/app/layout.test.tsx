@@ -69,7 +69,7 @@ describe('RootLayout', () => {
 describe('layout metadata', () => {
   it('exports metadata with title and description', () => {
     expect(metadata).toBeDefined();
-    expect(metadata.title).toBe('Image Gallery | Diversition');
+    expect(metadata.title).toBe('Image Gallery');
     expect(metadata.description).toContain('Image gallery');
     expect(metadata.description).toContain('infinite scroll');
     expect(metadata.description).toContain('hashtag filtering');

@@ -7,8 +7,10 @@ test.describe('Image Gallery', () => {
     await expect(
       page.getByRole('heading', { name: /image gallery/i }),
     ).toBeVisible();
-    await expect(page.getByTestId('image-grid')).toBeVisible();
-    await expect(page.getByTestId('gallery-card').first()).toBeVisible();
+    await expect(page.getByRole('list', { name: /image grid/i })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: /view.*full screen/i }).first(),
+    ).toBeVisible();
   });
 
   test('filters images when clicking hashtag', async ({ page }) => {

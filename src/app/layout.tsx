@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { LABELS } from '@/lib/constants';
 import './globals.css';
 
 const inter = Inter({
@@ -9,13 +10,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Image Gallery | Diversition',
-  description:
-    'Image gallery with infinite scroll and hashtag filtering. Browse and filter images by keywords.',
+  title: LABELS.galleryTitle,
+  description: LABELS.metaDescription,
   openGraph: {
-    title: 'Image Gallery | Diversition',
-    description:
-      'Image gallery with infinite scroll and hashtag filtering. Browse and filter images by keywords.',
+    title: LABELS.galleryTitle,
+    description: LABELS.metaDescription,
   },
 };
 

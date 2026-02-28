@@ -1,8 +1,7 @@
 # Product Requirements Document (PRD): Image Gallery SPA
 
-**Client:** Diversition Co., Ltd.  
-**Deadline:** March 1, 2026, 8:00 PM  
-**Submission:** hr@diversition.co.th (submissions to other channels will not be reviewed)
+**Deadline:** Per test instructions (e.g. March 1, 2026, 8:00 PM)  
+**Submission:** To the email and channel specified in the test instructions
 
 ---
 
@@ -78,31 +77,31 @@
 | --------------- | ------------------------------------------ |
 | **Source Code** | Submit all source code used in development |
 | **Format**      | If compressed, use **.zip only** (no .rar) |
-| **Channel**     | **hr@diversition.co.th** only              |
+| **Channel**     | As specified in the test instructions      |
 
 ### 6.2 Optional (Recommended)
 
-| Item         | Description                               |
-| ------------ | ----------------------------------------- |
-| **Live URL** | If deployed, include URL for live testing |
+| Item         | Description                                                   |
+| ------------ | ------------------------------------------------------------- |
+| **Live URL** | Include deployed URL for live testing (see PROJECT_STATUS.md) |
 
 ### 6.3 Deployment
 
-- **Not required** to deploy
-- **Recommended** to deploy if convenient; helps reviewers test and may improve evaluation
+- **Not required** to deploy per assignment; this project is deployed on Vercel.
+- Live URL is documented in [docs/PROJECT_STATUS.md](./docs/PROJECT_STATUS.md).
 
 ---
 
 ## 7. Recommended Tech Stack
 
-| Layer          | Technology                     | Notes                    |
-| -------------- | ------------------------------ | ------------------------ |
-| Frontend       | Next.js (React)                | Modern framework         |
-| Backend        | Node.js (API Routes / Express) | Server-side logic        |
-| Database       | MySQL + Prisma                 | Image and hashtag data   |
-| Infrastructure | Docker & Docker Compose        | Containerization         |
-| Deployment     | Ubuntu Server                  | Production environment   |
-| CI/CD          | GitHub Actions                 | Automated quality checks |
+| Layer          | Technology                           | Notes                    |
+| -------------- | ------------------------------------ | ------------------------ |
+| Frontend       | Next.js (React)                      | Modern framework         |
+| Backend        | Node.js (API Routes / Express)       | Server-side logic        |
+| Database       | MySQL + Prisma                       | Image and hashtag data   |
+| Infrastructure | Docker & Docker Compose              | Containerization         |
+| Deployment     | Vercel (live); Docker / Ubuntu + PM2 | Production / self-host   |
+| CI/CD          | GitHub Actions                       | Automated quality checks |
 
 ---
 
@@ -116,15 +115,5 @@
 - **GitHub Actions** – CI pipeline
 
 ---
-
-## 9. Pre-Submission Checklist
-
-- [x] All PRD features implemented
-- [x] Architecture diagram with explanation
-- [ ] Complete source code submitted
-- [ ] Use .zip if compressing
-- [ ] Submit to hr@diversition.co.th
-- [ ] Submit by March 1, 2026, 8:00 PM
-- [ ] (Optional) Live URL for testing
 
 > **Status:** See [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) for full project status.
