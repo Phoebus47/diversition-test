@@ -30,14 +30,10 @@ class MockIntersectionObserver implements IntersectionObserver {
   }
 }
 
-function triggerIntersection(
-  isIntersecting: boolean,
-  target?: Element,
-  emptyEntries = false,
-) {
+function triggerIntersection(isIntersecting: boolean, target?: Element | null) {
   if (intersectionCallback) {
-    if (emptyEntries) {
-      intersectionCallback([], {} as IntersectionObserver);
+    if (target === null) {
+      intersectionCallback([undefined as any], {} as IntersectionObserver);
       return;
     }
     const el = target ?? document.createElement('div');

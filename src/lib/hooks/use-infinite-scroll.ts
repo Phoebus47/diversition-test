@@ -12,6 +12,14 @@ export interface UseInfiniteScrollOptions {
   filter: (img: ImageItem) => boolean;
 }
 
+export function nextDisplayCount(
+  current: number,
+  pageSize: number,
+  max: number,
+): number {
+  return Math.min(current + pageSize, max);
+}
+
 export function useInfiniteScroll({
   pool,
   initialCount,
@@ -22,11 +30,14 @@ export function useInfiniteScroll({
 
   const [displayCount, setDisplayCount] = useState(initialCount);
   const sentinelRef = useRef<HTMLDivElement>(null);
-  /** Track previous intersecting state so we only load on transition into view (not while staying visible). */
-  const wasIntersectingRef = useRef(false);
+  const displayCountRef = useRef(displayCount);
 
   const images = filtered.slice(0, displayCount);
   const hasMore = displayCount < filtered.length;
+
+  useEffect(() => {
+    displayCountRef.current = displayCount;
+  }, [displayCount]);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -37,12 +48,13 @@ export function useInfiniteScroll({
         const entry = entries[0];
         if (!entry) return;
 
-        const isIntersecting = entry.isIntersecting;
-        const justEntered = isIntersecting && !wasIntersectingRef.current;
-        wasIntersectingRef.current = isIntersecting;
-
-        if (justEntered) {
-          setDisplayCount((c) => Math.min(c + pageSize, filtered.length));
+        if (entry.isIntersecting) {
+          const next = nextDisplayCount(
+            displayCountRef.current,
+            pageSize,
+            filtered.length,
+          );
+          setDisplayCount(next);
           observer.unobserve(sentinel);
           requestAnimationFrame(() => observer.observe(sentinel));
         }
@@ -54,7 +66,6 @@ export function useInfiniteScroll({
       },
     );
 
-    wasIntersectingRef.current = false;
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, [hasMore, pageSize, filtered.length]);
