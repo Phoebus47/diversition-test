@@ -1,0 +1,13 @@
+---
+description: Commit message format for Generate Commit (Husky + Commitlint)
+alwaysApply: true
+---
+
+# Commit message format
+
+Format: `type(scope): subject`
+
+- **Types:** feat, fix, docs, style, refactor, perf, test, chore, build, ci
+- **Header max 100 chars**
+- **Body:** 2–5 bullets, each line ≤ 100 chars
+- **Example:** `feat(gallery): add hashtag filter`

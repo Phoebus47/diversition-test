@@ -1,0 +1,28 @@
+---
+description: Follow project coding standards (docs/CODING_STANDARDS.md) on every task
+alwaysApply: true
+---
+
+# Coding Standards – Image Gallery
+
+**Apply on every task.** Full details in `docs/CODING_STANDARDS.md`
+
+## Section index (read only relevant sections)
+
+§1 Core | §2 React/Next.js | §3 TypeScript | §4 Folder | §5 Performance | §6 Animation | §8 SEO/a11y | §10 Lint | §11 Error | §13 Testing | §14 Copy | §17 SonarQube | §18 Checklist
+
+## Mandatory
+
+- No hardcoding (copy, colors, magic values)
+- Tailwind only, no inline styles
+- Next.js Image for images
+- No `any`, define interfaces
+- ESLint + Prettier pass
+- Files under 300 lines
+
+## Structure
+
+- `src/app/` – pages
+- `src/components/` – shared
+- `src/lib/` – utils, hooks, constants
+- `__tests__/` – tests

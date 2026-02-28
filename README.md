@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Image Gallery SPA
+
+Single-Page Application for displaying an image gallery with infinite scroll and keyword filtering.
+
+## Key Features
+
+- **Premium UI & UX** – Glassmorphism, tailored animations, and vibrant design system using Tailwind v4.
+- **Advanced Masonry Layout** – Stable JavaScript-based distribution algorithm that eliminates layout shift (Zero Layout Shift) during infinite scroll.
+- **Interactive Lightbox** – Full-screen modal with Next/Prev navigation, keyboard support (Arrow keys/ESC), and zoom transitions.
+- **Performance Optimized** – LCP priority loading, skeleton shimmer states, and hardware-accelerated transitions.
+- **Infinite Scroll** – Intelligent loading with smooth sentinel detection and animated feedback.
+- **Keyword Filtering** – Dynamic active filtering with frosted-glass sticky header for constant accessibility.
+- **Micro-interactions** – Ripple effects on hashtag clicks and subtle card entrance animations for elite feedback.
+
+## Tech Stack
+
+- **Frontend:** Next.js 16, React 19, TypeScript, Tailwind CSS
+- **Quality:** ESLint, Prettier, Vitest, SonarQube, Husky, Commitlint
+- **CI/CD:** GitHub Actions
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- npm
+
+### Installation
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command          | Description                   |
+| ---------------- | ----------------------------- |
+| `npm run dev`    | Run development server        |
+| `npm run build`  | Build for production          |
+| `npm run start`  | Run production server         |
+| `npm run lint`   | Run ESLint                    |
+| `npm run format` | Format code with Prettier     |
+| `npm run test`   | Run unit tests                |
+| `npm run sonar`  | Run SonarQube scan (optional) |
 
-## Learn More
+### Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/          # App Router pages
+├── components/   # Shared components
+└── lib/          # Utils, hooks, data
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+__tests__/        # Test files
+docs/             # Documentation
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Documentation
 
-## Deploy on Vercel
+- [PRD.md](./PRD.md) – Product Requirements Document
+- [docs/CODING_STANDARDS.md](./docs/CODING_STANDARDS.md) – Coding standards
+- [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) – Architecture diagram
+- [SETUP.md](./SETUP.md) – Setup guide
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Build for production:
+
+```bash
+npm run build
+npm run start
+```
+
+Or deploy to Vercel, Docker, or Ubuntu Server according to your architecture design.

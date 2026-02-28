@@ -1,0 +1,16 @@
+---
+description: Apply when editing API routes (Next.js Route Handlers)
+globs: ["src/app/api/**/*.ts", "**/route.ts"]
+alwaysApply: false
+---
+
+# API / Route handler context
+
+Editing API routes. See docs/CODING_STANDARDS.md §5, §11, §17
+
+## Quick checks
+
+- Validate input, return 400 for invalid
+- Correct status codes (200, 400, 404, 500)
+- No stack traces to client
+- TypeScript types for payloads

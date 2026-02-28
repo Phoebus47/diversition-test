@@ -1,0 +1,47 @@
+# Coding Standards – Image Gallery SPA
+
+**Apply on every task.** Full details in `docs/CODING_STANDARDS.md`
+
+## How to work efficiently
+
+1. Identify task type (UI / API / test)
+2. Read only the relevant sections from docs/CODING_STANDARDS.md (see index in §1)
+3. Use general best practices for React, Next.js, Vitest
+
+## Mandatory Rules
+
+### No hardcoding
+- **Copy:** Use constants or config in `src/lib/constants.ts`
+- **Colors:** Use Tailwind / design tokens from `globals.css`. No hardcoded hex/rgb
+- **Magic values:** Use named constants
+
+### Code style
+- **No inline styles:** Tailwind only
+- **Images:** Use Next.js `<Image>` from `next/image`
+- **Types:** No `any`. Define interfaces for props
+- **File size:** Keep files under 300 lines
+
+### Quality
+- **ESLint:** Code must pass `npm run lint`
+- **Prettier:** Run `npm run format` before commit
+- **SonarQube:** Must pass `npm run sonar` if run
+
+## Commit messages (Husky + Commitlint)
+
+Format: `type(scope): subject`
+
+- **Types:** feat, fix, docs, style, refactor, perf, test, chore, build, ci
+- **Header max 100 chars**
+- **Body:** Each line max 100 chars
+- **Example:** `feat(gallery): add infinite scroll`
+
+## Project structure
+
+- `src/app/` – App Router pages
+- `src/components/` – Shared components
+- `src/lib/` – Utils, hooks, constants, mock data
+- `__tests__/` – Test files
+
+## When you need full detail
+
+Read `docs/CODING_STANDARDS.md` for the relevant sections only (see index in §1)

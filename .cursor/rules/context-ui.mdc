@@ -1,0 +1,17 @@
+---
+description: Apply when editing UI – components, pages (React/Next.js)
+globs: ["src/app/**/*.tsx", "src/components/**/*.tsx"]
+alwaysApply: false
+---
+
+# UI / Component context
+
+Editing UI. See docs/CODING_STANDARDS.md §2, §4, §8
+
+## Quick checks
+
+- Use Next.js `<Image>` for images
+- Tailwind only, no inline styles
+- Semantic HTML, a11y (alt, focus-visible)
+- Layout: section `w-full`, content `mx-auto max-w-7xl px-4 sm:px-6 lg:px-8`
+- Interactive states: hover, active, disabled, focus-visible

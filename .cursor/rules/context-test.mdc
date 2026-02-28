@@ -1,0 +1,16 @@
+---
+description: Apply when editing tests (Vitest, React Testing Library)
+globs: ["__tests__/**/*.ts", "__tests__/**/*.tsx", "**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"]
+alwaysApply: false
+---
+
+# Test context
+
+Editing tests. See docs/CODING_STANDARDS.md §13, §17
+
+## Quick checks
+
+- Mock `next/image`, IntersectionObserver, fetch
+- Prefer `getByRole`, `getByLabelText` over `getByTestId`
+- Test behavior and outcomes, not implementation
+- One concern per test when possible
